@@ -1,1 +1,1 @@
-# hzero
+# hzero ($H_0$)
