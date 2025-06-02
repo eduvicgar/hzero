@@ -48,26 +48,26 @@ class TStudent:
             tail: Optional[Literal["right", "left", "bilateral"]] = None) -> None:
         """
         Plots the Student's t-distribution with optional rejection regions highlighted
-    based on the given parameters.
+        based on the given parameters.
 
-    This function can visualize critical regions for hypothesis testing depending on
-    the test statistic `d`, significance level `alpha`, and the type of test `tail`.
+        This function can visualize critical regions for hypothesis testing depending on
+        the test statistic `d`, significance level `alpha`, and the type of test `tail`.
 
-    :param d:
-        The test statistic value. If provided, it will be shown as
-        a dashed red line on the plot. Used to define the rejection region when
-        `tail` is specified.
-    :param alpha:
-        The significance level of the test, must be between 0 and 1. It is used to
-        compute critical values and determine the rejection region(s).
-    :param tail:
-        Specifies the type of hypothesis test:
-        - "right": one-tailed test (right side).
-        - "left": one-tailed test (left side).
-        - "bilateral": two-tailed test.
-        If `d` is provided without `alpha`, "bilateral" is not allowed.
-    :return:
-        None. Displays a plot of the t-distribution and any relevant rejection regions.
+        :param d:
+            The test statistic value. If provided, it will be shown as
+            a dashed red line on the plot. Used to define the rejection region when
+            `tail` is specified.
+        :param alpha:
+            The significance level of the test, must be between 0 and 1. It is used to
+            compute critical values and determine the rejection region(s).
+        :param tail:
+            Specifies the type of hypothesis test:
+            - "right": one-tailed test (right side).
+            - "left": one-tailed test (left side).
+            - "bilateral": two-tailed test.
+            If `d` is provided without `alpha`, "bilateral" is not allowed.
+        :return:
+            None. Displays a plot of the t-distribution and any relevant rejection regions.
         """
 
         if d and not alpha and tail == "bilateral":
