@@ -95,18 +95,18 @@ class TStudent:
             fill_region(condition, f'Critic value = {d}')
 
         if d and alpha and tail:
-            label_cv = f'Statistic = {d}'
+            label_statistic = f'Statistic = {d}'
             if tail == "right":
                 cv = self.critic_value(alpha, two_tailed=False)
-                fill_region(x >= cv, label_cv)
+                fill_region(x >= cv, label_statistic)
             elif tail == "left":
                 cv = self.critic_value(alpha, two_tailed=False)
-                fill_region(x <= cv, label_cv)
+                fill_region(x <= cv, label_statistic)
             else:
                 cv = self.critic_value(alpha, two_tailed=True)
-                fill_region(x <= -cv, label_cv)
+                fill_region(x <= -cv, label_statistic)
 
-                fill_region(x >= cv, label_cv)
+                fill_region(x >= cv, label_statistic)
 
         plt.grid(True)
         plt.tight_layout()
