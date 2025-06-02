@@ -71,7 +71,7 @@ class TStudent:
         """
 
         if d and not alpha and tail == "bilateral":
-            raise ValueError("Given d, you can't choose a bilateral tail.")
+            raise ValueError("Given critic value d, you can't choose a bilateral tail.")
         if alpha is not None and not 0 < alpha < 1:
             raise OutOfRange("Alpha value must be between 0 and 1")
 
@@ -92,10 +92,10 @@ class TStudent:
 
         if d and tail in ("right", "left") and not alpha:
             condition = x >= d if tail == "right" else x <= d
-            fill_region(condition, f'Valor crítico = {d}')
+            fill_region(condition, f'Critic value = {d}')
 
         if d and alpha and tail:
-            label_cv = f'Valor crítico = {d}'
+            label_cv = f'Statistic = {d}'
             if tail == "right":
                 cv = self.critic_value(alpha, two_tailed=False)
                 fill_region(x >= cv, label_cv)
