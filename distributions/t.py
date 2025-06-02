@@ -37,10 +37,10 @@ class TStudent:
         :return: The p-value indicating the probability of observing a t-statistic as extreme as `d` under the null hypothesis.
         """
         if two_tailed:
-            p: float = 2 * (1 - tdistribution.cdf(d, self.df))
+            return 2 * (1 - tdistribution.cdf(abs(d), self.df))
         else:
-            p: float = tdistribution.cdf(d, self.df)
-        return p
+            # one-tailed: if d < 0, p = P(T <= d); if d > 0, p = P(T >= d)
+            return tdistribution.cdf(d, self.df) if d > 0 else 1 - tdistribution.cdf(d, self.df)
 
     def plot(self,
             d: Optional[float] = None,
@@ -105,7 +105,6 @@ class TStudent:
             else:
                 cv = self.critic_value(alpha, two_tailed=True)
                 fill_region(x <= -cv, label_statistic)
-
                 fill_region(x >= cv, label_statistic)
 
         plt.grid(True)
