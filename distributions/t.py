@@ -79,14 +79,14 @@ class TStudent:
         y = tdistribution.pdf(x, self.df)
         plt.plot(x, y, color='black')
 
-        def fill_region(given_condition, given_label_cv):
+        def fill_region(given_condition, given_label):
             x_fill = x[given_condition]
             y_fill = y[given_condition]
             plt.fill_between(x_fill, y_fill, color='lightgrey', hatch='///', edgecolor='black', linewidth=0.0)
-            plt.axvline(d, color='red', linestyle='--', label=given_label_cv)
+            plt.axvline(d, color='red', linestyle='--', label=given_label)
             patch = Patch(facecolor='lightgrey', hatch='///', edgecolor='black', label='Rejection region')
             plt.legend(handles=[
-                plt.Line2D([], [], color='red', linestyle='--', label=given_label_cv),
+                plt.Line2D([], [], color='red', linestyle='--', label=given_label),
                 patch
             ])
 
