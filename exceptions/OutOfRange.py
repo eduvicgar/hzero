@@ -1,0 +1,2 @@
+class OutOfRange(Exception):
+    pass
