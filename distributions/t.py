@@ -75,7 +75,7 @@ class TStudent:
         if alpha is not None and not 0 < alpha < 1:
             raise OutOfRange("Alpha value must be between 0 and 1")
 
-        x = np.arange(-4, 4, 0.01)
+        x = np.linspace(tdistribution.ppf(0.001, self.df), tdistribution.ppf(0.999, self.df), 1000)
         y = tdistribution.pdf(x, self.df)
         plt.plot(x, y, color='black')
 
@@ -114,6 +114,6 @@ class TStudent:
 
 
 if __name__ == '__main__':
-    t = TStudent(4)
+    t = TStudent(15)
     t.plot(d=-1.21, alpha=0.05, tail="bilateral")
 
