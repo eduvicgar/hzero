@@ -1,6 +1,5 @@
 import pytest
 from distributions.chisq import ChiSquare
-from exceptions.OutOfRange import OutOfRange
 from scipy.stats import chi2
 
 def test_critic_value_right_tail():
@@ -17,12 +16,12 @@ def test_critic_value_left_tail():
 
 def test_critic_value_invalid_alpha_low():
     chisq = ChiSquare(3)
-    with pytest.raises(OutOfRange):
+    with pytest.raises(ValueError):
         chisq.critic_value(-0.1, tail="right")
 
 def test_critic_value_invalid_alpha_high():
     chisq = ChiSquare(3)
-    with pytest.raises(OutOfRange):
+    with pytest.raises(ValueError):
         chisq.critic_value(1.5, tail="left")
 
 def test_p_value_right_tail():
@@ -71,7 +70,7 @@ def test_plot_missing_alpha_with_bilateral():
 
 def test_plot_invalid_alpha_raises():
     chisq = ChiSquare(4)
-    with pytest.raises(OutOfRange):
+    with pytest.raises(ValueError):
         chisq.plot(d=3.0, alpha=1.5, tail="right")
 
 def test_plot_only_d(monkeypatch):

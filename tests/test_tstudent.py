@@ -1,7 +1,6 @@
 import pytest
 from scipy.stats import t as tdistribution
 from distributions.t import TStudent
-from exceptions.OutOfRange import OutOfRange
 
 def test_critic_value_one_tailed():
     t = TStudent(10)
@@ -15,7 +14,7 @@ def test_critic_value_two_tailed():
 
 def test_critic_value_invalid_alpha():
     t = TStudent(10)
-    with pytest.raises(OutOfRange):
+    with pytest.raises(ValueError):
         t.critic_value(1.5, True)
 
 def test_p_value_two_tailed():
@@ -62,7 +61,7 @@ def test_p_value_symmetry_two_tailed(d):
 
 def test_plot_invalid_alpha():
     t = TStudent(12)
-    with pytest.raises(OutOfRange):
+    with pytest.raises(ValueError):
         t.plot(d=1.5, alpha=1.2, tail='right')
 
 def test_plot_distribution_only(monkeypatch):
