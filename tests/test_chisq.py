@@ -36,7 +36,7 @@ def test_p_value_left_tail():
     d = 5.0
     result = chisq.p_value(d, tail="left")
     expected = chi2.cdf(d, 4)
-    assert result == pytest.approx(expected) or result == pytest.approx(1 - expected)  # ambiguous doc logic
+    assert result == pytest.approx(expected)
 
 def test_p_value_zero():
     chisq = ChiSquare(2)
