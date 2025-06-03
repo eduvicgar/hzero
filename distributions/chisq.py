@@ -50,7 +50,7 @@ class ChiSquare:
         if d < 0:
             raise ValueError("Chi-square statistic must be non-negative")
         if tail not in ("left", "right"):
-            raise ValueError("tail must be one of 'left', 'right', 'bilateral'")
+            raise ValueError("tail must be one of 'left', 'right'")
         return 1 - chi2.cdf(d, self.df) if tail == "right" else chi2.cdf(d, self.df)
 
     def plot(self,
