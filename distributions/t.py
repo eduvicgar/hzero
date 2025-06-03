@@ -54,9 +54,10 @@ class TStudent:
         the test statistic `d`, significance level `alpha`, and the type of test `tail`.
 
         :param d:
-            The test statistic value. If provided, it will be shown as
-            a dashed red line on the plot. Used to define the rejection region when
+            If alpha is specified, the test statistic value.
+            Otherwise, the critic value used to define the rejection region when
             `tail` is specified.
+            If provided, it will be shown as a dashed red line on the plot.
         :param alpha:
             The significance level of the test, must be between 0 and 1. It is used to
             compute critical values and determine the rejection region(s).
