@@ -106,25 +106,26 @@ class ChiSquare:
                 patch
             ])
 
-        if d and d < 0:
-            raise ValueError("Chi-square statistic must be non-negative")
-        if tail in ("right", "left") and not alpha:
-            condition = x >= d if tail == "right" else x <= d
-            fill_region(condition, f'Critic value = {d}')
+        if d:
+            if d < 0:
+                raise ValueError("Chi-square statistic must be non-negative")
+            if tail in ("right", "left") and not alpha:
+                condition = x >= d if tail == "right" else x <= d
+                fill_region(condition, f'Critic value = {d}')
 
-        if alpha and tail:
-            label_statistic = f'Statistic = {d}'
-            if tail == "right":
-                cv = self.critic_value(alpha, tail=tail)
-                fill_region(x >= cv, label_statistic)
-            elif tail == "left":
-                cv = self.critic_value(alpha, tail=tail)
-                fill_region(x <= cv, label_statistic)
-            else:
-                cv_left = self.critic_value(alpha / 2, tail="left")
-                cv_right = self.critic_value(alpha / 2, tail="right")
-                fill_region(x <= cv_left, label_statistic)
-                fill_region(x >= cv_right, label_statistic)
+            if alpha and tail:
+                label_statistic = f'Statistic = {d}'
+                if tail == "right":
+                    cv = self.critic_value(alpha, tail=tail)
+                    fill_region(x >= cv, label_statistic)
+                elif tail == "left":
+                    cv = self.critic_value(alpha, tail=tail)
+                    fill_region(x <= cv, label_statistic)
+                else:
+                    cv_left = self.critic_value(alpha / 2, tail="left")
+                    cv_right = self.critic_value(alpha / 2, tail="right")
+                    fill_region(x <= cv_left, label_statistic)
+                    fill_region(x >= cv_right, label_statistic)
 
         plt.grid(True)
         plt.tight_layout()
