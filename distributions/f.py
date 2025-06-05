@@ -35,7 +35,8 @@ class FSnedecor:
             raise ValueError("alpha must be between 0 and 1")
         if tail not in ("left", "right"):
             raise ValueError("tail must be 'left' or 'right'")
-        return fdistribution.ppf(alpha, self.df1, self.df2) if tail == "left" else fdistribution.ppf(1 - alpha, self.df1, self.df2)
+        return fdistribution.ppf(alpha, self.df1, self.df2) if tail == "left" \
+            else fdistribution.ppf(1 - alpha, self.df1, self.df2)
 
     def p_value(self, d: float, tail: Literal["left", "right"]) -> float:
         """
@@ -51,7 +52,8 @@ class FSnedecor:
             raise ValueError("F statistic must be non-negative")
         if tail not in ("left", "right"):
             raise ValueError("tail must be 'left' or 'right'")
-        return fdistribution.cdf(d, self.df1, self.df2) if tail == "left" else 1 - fdistribution.cdf(d, self.df1, self.df2)
+        return fdistribution.cdf(d, self.df1, self.df2) if tail == "left" \
+            else 1 - fdistribution.cdf(d, self.df1, self.df2)
 
     def plot(self,
              d: Optional[float] = None,
@@ -89,7 +91,8 @@ class FSnedecor:
         if alpha is not None and not 0 < alpha < 1:
             raise ValueError("Alpha value must be between 0 and 1")
 
-        x = np.linspace(fdistribution.ppf(0.001, self.df1, self.df2), fdistribution.ppf(0.999, self.df1, self.df2), 1000)
+        x = np.linspace(fdistribution.ppf(0.001, self.df1, self.df2),
+                        fdistribution.ppf(0.999, self.df1, self.df2), 1000)
         y = fdistribution.pdf(x, self.df1, self.df2)
         plt.plot(x, y, color="black")
 
