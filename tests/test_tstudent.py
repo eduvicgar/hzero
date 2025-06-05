@@ -3,13 +3,13 @@ from scipy.stats import t as tdistribution
 from distributions.t import TStudent
 
 def test_critic_value_one_tailed():
-    t = TStudent(10)
-    val = t.critic_value(0.05, two_tailed=False)
+    ttest = TStudent(10)
+    val = ttest.critic_value(0.05, two_tailed=False)
     assert round(val, 4) == round(tdistribution.ppf(0.95, 10), 4)
 
 def test_critic_value_two_tailed():
-    t = TStudent(10)
-    val = t.critic_value(0.05, two_tailed=True)
+    ttest = TStudent(10)
+    val = ttest.critic_value(0.05, two_tailed=True)
     assert round(val, 4) == round(tdistribution.ppf(0.975, 10), 4)
 
 def test_critic_value_invalid_alpha():
@@ -47,8 +47,8 @@ def test_plot_valid(monkeypatch):
     (0.001, False), (0.001, True)
 ])
 def test_critic_value_varios_alphas(alpha, two_tailed):
-    t = TStudent(20)
-    val = t.critic_value(alpha, two_tailed)
+    ttest = TStudent(20)
+    val = ttest.critic_value(alpha, two_tailed)
     expected = tdistribution.ppf(1 - alpha / 2, 20) if two_tailed else tdistribution.ppf(1 - alpha, 20)
     assert round(val, 4) == round(expected, 4)
 

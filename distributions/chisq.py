@@ -27,7 +27,7 @@ class ChiSquare:
         :param tail: Determines the type of hypothesis test:
                      "right": one-tailed test (right side),
                      "left": one-tailed test (left side).
-        :return: The critical t-value corresponding to the given alpha level and test type.
+        :return: The critical chisq-value corresponding to the given alpha level and test type.
         :raises ValueError: If the alpha value is not in the range (0, 1).
         """
         if not 0 < alpha < 1:
@@ -51,7 +51,7 @@ class ChiSquare:
             raise ValueError("Chi-square statistic must be non-negative")
         if tail not in ("left", "right"):
             raise ValueError("tail must be one of 'left', 'right'")
-        return 1 - chi2.cdf(d, self.df) if tail == "right" else chi2.cdf(d, self.df)
+        return chi2.cdf(d, self.df) if tail == "left" else 1 - chi2.cdf(d, self.df)
 
     def plot(self,
             d: Optional[float] = None,
