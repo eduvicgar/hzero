@@ -1,5 +1,5 @@
 import pytest
-from distributions.f import FSnedecor
+from distributions import FSnedecor
 from scipy.stats import f as fdistribution
 
 

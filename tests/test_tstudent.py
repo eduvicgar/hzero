@@ -1,6 +1,6 @@
 import pytest
 from scipy.stats import t as tdistribution
-from distributions.t import TStudent
+from distributions import TStudent
 
 def test_critic_value_one_tailed():
     ttest = TStudent(10)
