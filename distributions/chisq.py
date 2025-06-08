@@ -8,6 +8,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 from matplotlib.patches import Patch
 from scipy.stats import chi2
+from validators import *
 
 
 class ChiSquare:
@@ -17,6 +18,8 @@ class ChiSquare:
     def __init__(self, df: int):
         self.df = df
 
+    @validate_alpha
+    @validate_tail(("left", "right"))
     def critic_value(self, alpha: float, tail: Literal["left", "right"]) -> float:
         """
         Calculates the critical value from the chi square distribution based on
@@ -28,15 +31,13 @@ class ChiSquare:
                      "right": one-tailed test (right side),
                      "left": one-tailed test (left side).
         :return: The critical chisq-value corresponding to the given alpha level and test type.
-        :raises ValueError: If the alpha value is not in the range (0, 1).
+        :raises ValueError: If the alpha value is not in the range (0, 1) or tail is not
+                            left or right.
         """
-        if not 0 < alpha < 1:
-            raise ValueError("Alpha value must be between 0 and 1")
-        if tail not in ("left", "right"):
-            raise ValueError("tail must be one of 'left', 'right'")
         return chi2.ppf(alpha, self.df) if tail == "left" else chi2.ppf(1 - alpha, self.df)
 
-
+    @validate_d_nonnegative
+    @validate_tail(("left", "right"))
     def p_value(self, d: float, tail: Literal["left", "right"]) -> float:
         """
         Calculates the p-value from the chi square distribution for a given chisq-statistic.
@@ -47,12 +48,11 @@ class ChiSquare:
         :return: The p-value indicating the probability of observing a chisq-statistic
                  as extreme as `d` under the null hypothesis.
         """
-        if d < 0:
-            raise ValueError("Chi-square statistic must be non-negative")
-        if tail not in ("left", "right"):
-            raise ValueError("tail must be one of 'left', 'right'")
         return chi2.cdf(d, self.df) if tail == "left" else 1 - chi2.cdf(d, self.df)
 
+    @validate_alpha
+    @validate_d_nonnegative
+    @validate_tail(("left", "right", "bilateral", None))
     def plot(self,
             d: Optional[float] = None,
             alpha: Optional[float] = None,
@@ -82,13 +82,8 @@ class ChiSquare:
             None. Displays a plot of the chi square distribution and
             any relevant rejection regions.
         """
-        if tail not in ("left", "right", "bilateral", None):
-            raise ValueError("tail must be one of 'left', 'right', 'bilateral'")
         if d and not alpha and tail == "bilateral":
             raise ValueError("Given critic value d, you can't choose a bilateral tail.")
-        if alpha is not None and not 0 < alpha < 1:
-            raise ValueError("Alpha value must be between 0 and 1")
-
         x = np.linspace(chi2.ppf(0.001, self.df), chi2.ppf(0.999, self.df), 1000)
         y = chi2.pdf(x, self.df)
         plt.plot(x, y, color='black')

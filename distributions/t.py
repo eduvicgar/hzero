@@ -8,6 +8,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 from matplotlib.patches import Patch
 from scipy.stats import t as tdistribution
+from validators import validate_alpha
 
 
 class TStudent:
@@ -17,6 +18,7 @@ class TStudent:
     def __init__(self, df: int):
         self.df = df
 
+    @validate_alpha
     def critic_value(self, alpha: float, two_tailed: bool) -> float:
         """
         Calculates the critical value from the t-distribution based on the given significance level.
@@ -29,8 +31,6 @@ class TStudent:
 
         :raises ValueError: If the alpha value is not in the range (0, 1).
         """
-        if not 0 < alpha < 1:
-            raise ValueError("Alpha value must be between 0 and 1")
         if two_tailed:
             v = tdistribution.ppf(1 - alpha/2, self.df)
         else:
@@ -51,6 +51,7 @@ class TStudent:
             return 2 * (1 - tdistribution.cdf(abs(d), self.df))
         return tdistribution.cdf(d, self.df) if d > 0 else 1 - tdistribution.cdf(d, self.df)
 
+    @validate_alpha
     def plot(self,
             d: Optional[float] = None,
             alpha: Optional[float] = None,
@@ -82,8 +83,6 @@ class TStudent:
 
         if d and not alpha and tail == "bilateral":
             raise ValueError("Given critic value d, you can't choose a bilateral tail.")
-        if alpha is not None and not 0 < alpha < 1:
-            raise ValueError("Alpha value must be between 0 and 1")
 
         x = np.linspace(tdistribution.ppf(0.001, self.df), tdistribution.ppf(0.999, self.df), 1000)
         y = tdistribution.pdf(x, self.df)

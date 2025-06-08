@@ -8,6 +8,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 from matplotlib.patches import Patch
 from scipy.stats import f as fdistribution
+from validators import *
 
 
 class FSnedecor:
@@ -18,6 +19,8 @@ class FSnedecor:
         self.df1 = df1
         self.df2 = df2
 
+    @validate_alpha
+    @validate_tail(("left", "right"))
     def critic_value(self, alpha: float, tail: Literal["left", "right"]) -> float:
         """
         Calculates the critical value from the F distribution based on
@@ -31,13 +34,11 @@ class FSnedecor:
         :return: The critical F-value corresponding to the given alpha level and test type.
         :raises ValueError: If the alpha value is not in the range (0, 1).
         """
-        if not 0 < alpha < 1:
-            raise ValueError("alpha must be between 0 and 1")
-        if tail not in ("left", "right"):
-            raise ValueError("tail must be 'left' or 'right'")
         return fdistribution.ppf(alpha, self.df1, self.df2) if tail == "left" \
             else fdistribution.ppf(1 - alpha, self.df1, self.df2)
 
+    @validate_d_nonnegative
+    @validate_tail(("left", "right"))
     def p_value(self, d: float, tail: Literal["left", "right"]) -> float:
         """
         Calculates the p-value from the F distribution for a given F-statistic.
@@ -48,13 +49,12 @@ class FSnedecor:
         :return: The p-value indicating the probability of observing an F-statistic
                  as extreme as `d` under the null hypothesis.
         """
-        if d < 0:
-            raise ValueError("F statistic must be non-negative")
-        if tail not in ("left", "right"):
-            raise ValueError("tail must be 'left' or 'right'")
         return fdistribution.cdf(d, self.df1, self.df2) if tail == "left" \
             else 1 - fdistribution.cdf(d, self.df1, self.df2)
 
+    @validate_alpha
+    @validate_d_nonnegative
+    @validate_tail(("left", "right", "bilateral", None))
     def plot(self,
              d: Optional[float] = None,
              alpha: Optional[float] = None,
@@ -84,13 +84,8 @@ class FSnedecor:
             None. Displays a plot of the F distribution and
             any relevant rejection regions.
         """
-        if tail not in ("left", "right", "bilateral", None):
-            raise ValueError("tail must be one of 'left', 'right', 'bilateral'")
         if d and not alpha and tail == "bilateral":
             raise ValueError("Given critic value d, you can't choose a bilateral tail.")
-        if alpha is not None and not 0 < alpha < 1:
-            raise ValueError("Alpha value must be between 0 and 1")
-
         x = np.linspace(fdistribution.ppf(0.001, self.df1, self.df2),
                         fdistribution.ppf(0.999, self.df1, self.df2), 1000)
         y = fdistribution.pdf(x, self.df1, self.df2)
