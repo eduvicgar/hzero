@@ -16,6 +16,8 @@ class TStudent:
     Defines a class of the t-distribution.
     """
     def __init__(self, df: int):
+        if df < 0:
+            raise ValueError("The degrees of freedom must be >= 0.")
         self.df = df
 
     @validate_alpha

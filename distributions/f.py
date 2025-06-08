@@ -16,6 +16,8 @@ class FSnedecor:
     Defines a class of the F distribution.
     """
     def __init__(self, df1: int, df2: int):
+        if df1 < 0 or df2 < 0:
+            raise ValueError("The degrees of freedom must be >= 0.")
         self.df1 = df1
         self.df2 = df2
 
