@@ -23,7 +23,7 @@ class FSnedecor:
 
     @validate_alpha
     @validate_tail(("left", "right"))
-    def critic_value(self, alpha: float, tail: Literal["left", "right"]) -> float:
+    def critical_value(self, alpha: float, tail: Literal["left", "right"]) -> float:
         """
         Calculates the critical value from the F distribution based on
         the given significance level.
@@ -34,7 +34,8 @@ class FSnedecor:
                      "right": one-tailed test (right side),
                      "left": one-tailed test (left side).
         :return: The critical F-value corresponding to the given alpha level and test type.
-        :raises ValueError: If the alpha value is not in the range (0, 1).
+        :raises ValueError: If the alpha value is not in the range (0, 1) or tail is not
+                            left or right.
         """
         return fdistribution.ppf(alpha, self.df1, self.df2) if tail == "left" \
             else fdistribution.ppf(1 - alpha, self.df1, self.df2)
@@ -116,14 +117,14 @@ class FSnedecor:
             if alpha and tail:
                 label_statistic = f"Statistic = {d}"
                 if tail == "right":
-                    cv = self.critic_value(alpha, tail=tail)
+                    cv = self.critical_value(alpha, tail=tail)
                     fill_region(x >= cv, label_statistic)
                 elif tail == "left":
-                    cv = self.critic_value(alpha, tail=tail)
+                    cv = self.critical_value(alpha, tail=tail)
                     fill_region(x <= cv, label_statistic)
                 else:
-                    cv_left = self.critic_value(alpha/2, tail="left")
-                    cv_right = self.critic_value(alpha/2, tail="right")
+                    cv_left = self.critical_value(alpha / 2, tail="left")
+                    cv_right = self.critical_value(alpha / 2, tail="right")
                     fill_region(x <= cv_left, label_statistic)
                     fill_region(x >= cv_right, label_statistic)
 

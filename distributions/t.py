@@ -21,7 +21,7 @@ class TStudent:
         self.df = df
 
     @validate_alpha
-    def critic_value(self, alpha: float, two_tailed: bool) -> float:
+    def critical_value(self, alpha: float, two_tailed: bool) -> float:
         """
         Calculates the critical value from the t-distribution based on the given significance level.
 
@@ -110,13 +110,13 @@ class TStudent:
         if d and alpha and tail:
             label_statistic = f'Statistic = {d}'
             if tail == "right":
-                cv = self.critic_value(alpha, two_tailed=False)
+                cv = self.critical_value(alpha, two_tailed=False)
                 fill_region(x >= cv, label_statistic)
             elif tail == "left":
-                cv = self.critic_value(alpha, two_tailed=False)
+                cv = self.critical_value(alpha, two_tailed=False)
                 fill_region(x <= cv, label_statistic)
             else:
-                cv = self.critic_value(alpha, two_tailed=True)
+                cv = self.critical_value(alpha, two_tailed=True)
                 fill_region(x <= -cv, label_statistic)
                 fill_region(x >= cv, label_statistic)
 

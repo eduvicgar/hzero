@@ -22,7 +22,7 @@ class ChiSquare:
 
     @validate_alpha
     @validate_tail(("left", "right"))
-    def critic_value(self, alpha: float, tail: Literal["left", "right"]) -> float:
+    def critical_value(self, alpha: float, tail: Literal["left", "right"]) -> float:
         """
         Calculates the critical value from the chi square distribution based on
         the given significance level.
@@ -113,14 +113,14 @@ class ChiSquare:
             if alpha and tail:
                 label_statistic = f'Statistic = {d}'
                 if tail == "right":
-                    cv = self.critic_value(alpha, tail=tail)
+                    cv = self.critical_value(alpha, tail=tail)
                     fill_region(x >= cv, label_statistic)
                 elif tail == "left":
-                    cv = self.critic_value(alpha, tail=tail)
+                    cv = self.critical_value(alpha, tail=tail)
                     fill_region(x <= cv, label_statistic)
                 else:
-                    cv_left = self.critic_value(alpha / 2, tail="left")
-                    cv_right = self.critic_value(alpha / 2, tail="right")
+                    cv_left = self.critical_value(alpha / 2, tail="left")
+                    cv_right = self.critical_value(alpha / 2, tail="right")
                     fill_region(x <= cv_left, label_statistic)
                     fill_region(x >= cv_right, label_statistic)
 

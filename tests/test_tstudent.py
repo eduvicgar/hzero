@@ -4,18 +4,18 @@ from distributions import TStudent
 
 def test_critic_value_one_tailed():
     ttest = TStudent(10)
-    val = ttest.critic_value(0.05, two_tailed=False)
+    val = ttest.critical_value(0.05, two_tailed=False)
     assert round(val, 4) == round(tdistribution.ppf(0.95, 10), 4)
 
 def test_critic_value_two_tailed():
     ttest = TStudent(10)
-    val = ttest.critic_value(0.05, two_tailed=True)
+    val = ttest.critical_value(0.05, two_tailed=True)
     assert round(val, 4) == round(tdistribution.ppf(0.975, 10), 4)
 
 def test_critic_value_invalid_alpha():
     t = TStudent(10)
     with pytest.raises(ValueError):
-        t.critic_value(1.5, True)
+        t.critical_value(1.5, True)
 
 def test_p_value_two_tailed():
     t = TStudent(10)
@@ -48,7 +48,7 @@ def test_plot_valid(monkeypatch):
 ])
 def test_critic_value_varios_alphas(alpha, two_tailed):
     ttest = TStudent(20)
-    val = ttest.critic_value(alpha, two_tailed)
+    val = ttest.critical_value(alpha, two_tailed)
     expected = tdistribution.ppf(1 - alpha / 2, 20) if two_tailed else tdistribution.ppf(1 - alpha, 20)
     assert round(val, 4) == round(expected, 4)
 
