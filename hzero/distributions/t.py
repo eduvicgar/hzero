@@ -8,7 +8,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 from matplotlib.patches import Patch
 from scipy.stats import t as tdistribution
-from validators import validate_alpha
+from ..validators import validate_alpha
 
 
 class TStudent:

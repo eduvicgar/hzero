@@ -1,5 +1,5 @@
 import pytest
-from distributions import ChiSquare
+from hzero.distributions import ChiSquare
 from scipy.stats import chi2
 
 def test_critic_value_right_tail():

@@ -1,6 +1,6 @@
 import pytest
 from scipy.stats import t as tdistribution
-from distributions import TStudent
+from hzero.distributions import TStudent
 
 def test_critic_value_one_tailed():
     ttest = TStudent(10)
@@ -18,14 +18,14 @@ def test_critic_value_invalid_alpha():
         t.critical_value(1.5, True)
 
 def test_p_value_two_tailed():
-    t = TStudent(10)
-    val = t.p_value(1.5, two_tailed=True)
+    ttest = TStudent(10)
+    val = ttest.p_value(1.5, two_tailed=True)
     expected = 2 * (1 - tdistribution.cdf(1.5, 10))
     assert round(val, 5) == round(expected, 5)
 
 def test_p_value_one_tailed():
-    t = TStudent(10)
-    val = t.p_value(1.5, two_tailed=False)
+    ttest = TStudent(10)
+    val = ttest.p_value(1.5, two_tailed=False)
     expected = tdistribution.cdf(1.5, 10)
     assert round(val, 5) == round(expected, 5)
 
