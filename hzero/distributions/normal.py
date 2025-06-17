@@ -1,3 +1,8 @@
+"""
+This module implements a class for the normal distribution.
+With this class you can compute critic values, p-values and plot the distribution
+using the methods provided to the class.
+"""
 from typing import Optional, Literal
 import numpy as np
 from matplotlib import pyplot as plt
@@ -6,6 +11,9 @@ from scipy.stats import norm
 from ..validators import *
 
 class Normal:
+    """
+    Defines a class of the normal distribution.
+    """
     def __init__(self, mean: float, std: float):
         self.mean = mean
         self.std = std
@@ -50,7 +58,7 @@ class Normal:
              alpha: Optional[float] = None,
              tail: Optional[Literal["right", "left", "bilateral"]] = None) -> None:
         """
-        Plots the Student's t-distribution with optional rejection regions highlighted
+        Plots the normal distribution with optional rejection regions highlighted
         based on the given parameters.
 
         This function can visualize critical regions for hypothesis testing depending on
@@ -71,7 +79,7 @@ class Normal:
             - "bilateral": two-tailed test.
             If `d` is provided without `alpha`, "bilateral" is not allowed.
         :return:
-            None. Displays a plot of the t-distribution and any relevant rejection regions.
+            None. Displays a plot of the normal distribution and any relevant rejection regions.
         """
 
         if d and not alpha and tail == "bilateral":
