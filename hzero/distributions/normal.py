@@ -1,64 +1,54 @@
-"""
-This module implements a class for the t-distribution.
-With this class you can compute critic values, p-values and plot the distribution
-using the methods provided to the class.
-"""
 from typing import Optional, Literal
 import numpy as np
 from matplotlib import pyplot as plt
 from matplotlib.patches import Patch
-from scipy.stats import t as tdistribution
-from ..validators import validate_alpha, validate_tail
+from scipy.stats import norm
+from ..validators import *
 
-
-class TStudent:
-    """
-    Defines a class of the t-distribution.
-    """
-    def __init__(self, df: int):
-        if df < 0:
-            raise ValueError("The degrees of freedom must be >= 0.")
-        self.df = df
+class Normal:
+    def __init__(self, mean: float, std: float):
+        self.mean = mean
+        self.std = std
 
     @validate_alpha
     def critical_value(self, alpha: float, two_tailed: bool) -> float:
         """
-        Calculates the critical value from the t-distribution based on the given significance level.
+        Calculates the critical value from the normal distribution based on the given significance level.
 
         :param alpha: Significance level (a float between 0 and 1). Determines the probability
                       threshold.
         :param two_tailed: If True, performs a two-tailed test;
                            otherwise, performs a one-tailed test.
-        :return: The critical t-value corresponding to the given alpha level and test type.
+        :return: The critical value corresponding to the given alpha level and test type.
 
         :raises ValueError: If the alpha value is not in the range (0, 1).
         """
         if two_tailed:
-            v = tdistribution.ppf(1 - alpha/2, self.df)
+            v = norm.ppf(alpha / 2, self.mean, self.std)
         else:
-            v = tdistribution.ppf(1 - alpha, self.df)
+            v = norm.ppf(alpha, self.mean, self.std)
         return v
 
     def p_value(self, d: float, two_tailed: bool) -> float:
         """
-        Calculates the p-value from the t-distribution for a given t-statistic.
+        Calculates the p-value from the normal distribution for a given statistic.
 
-        :param d: The calculated t-statistic (difference measure). Can be positive or negative.
+        :param d: The calculated statistic (difference measure). Can be positive or negative.
         :param two_tailed: If True, computes a two-tailed p-value;
                            otherwise, computes a one-tailed p-value.
-        :return: The p-value indicating the probability of observing a t-statistic
+        :return: The p-value indicating the probability of observing a statistic
                  as extreme as `d` under the null hypothesis.
         """
         if two_tailed:
-            return 2 * (1 - tdistribution.cdf(abs(d), self.df))
-        return tdistribution.cdf(d, self.df) if d > 0 else 1 - tdistribution.cdf(d, self.df)
+            return 2 * (1 - norm.cdf(abs(d), self.mean, self.std))
+        return norm.cdf(d, self.mean, self.std) if d > 0 else 1 - norm.cdf(d, self.mean, self.std)
 
     @validate_alpha
     @validate_tail(("left", "right", "bilateral", None))
     def plot(self,
-            d: Optional[float] = None,
-            alpha: Optional[float] = None,
-            tail: Optional[Literal["right", "left", "bilateral"]] = None) -> None:
+             d: Optional[float] = None,
+             alpha: Optional[float] = None,
+             tail: Optional[Literal["right", "left", "bilateral"]] = None) -> None:
         """
         Plots the Student's t-distribution with optional rejection regions highlighted
         based on the given parameters.
@@ -87,8 +77,8 @@ class TStudent:
         if d and not alpha and tail == "bilateral":
             raise ValueError("Given critic value d, you can't choose a bilateral tail.")
 
-        x = np.linspace(tdistribution.ppf(0.001, self.df), tdistribution.ppf(0.999, self.df), 1000)
-        y = tdistribution.pdf(x, self.df)
+        x = np.linspace(norm.ppf(0.001, self.mean, self.std), norm.ppf(0.999, self.mean, self.std), 1000)
+        y = norm.pdf(x, self.mean, self.std)
         plt.plot(x, y, color='black')
 
         def fill_region(given_condition, given_label):
@@ -126,5 +116,5 @@ class TStudent:
         plt.show()
 
 if __name__ == '__main__':
-    t = TStudent(15)
-    t.plot(d=-1.21, alpha=0.05, tail="bilateral")
+    n = Normal(0, 1)
+    n.plot(d=1.45, tail="left")
