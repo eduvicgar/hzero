@@ -129,6 +129,9 @@ class TStudent:
         plt.tight_layout()
         plt.show()
 
+    def __str__(self) -> str:
+        return f"Student's t-distribution with {self.df} degrees of freedom"
+
 if __name__ == '__main__':
     t = TStudent(15)
     t.plot(d=-1.21, alpha=0.05, tail="bilateral")

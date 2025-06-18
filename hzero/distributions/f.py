@@ -132,6 +132,9 @@ class FSnedecor:
         plt.tight_layout()
         plt.show()
 
+    def __str__(self) -> str:
+        return f"Snedecor's F distribution with {self.df1}, {self.df2} degrees of freedom"
+
 if __name__ == "__main__":
     f = FSnedecor(10, 12)
     f.plot(d=1.25, alpha=0.05, tail="bilateral")

@@ -128,6 +128,9 @@ class ChiSquare:
         plt.tight_layout()
         plt.show()
 
+    def __str__(self) -> str:
+        return f"Chi-squared distribution with {self.df} degrees of freedom"
+
 if __name__ == '__main__':
     chisq = ChiSquare(4)
     chisq.plot(d=3.25, alpha=0.05, tail="bilateral")

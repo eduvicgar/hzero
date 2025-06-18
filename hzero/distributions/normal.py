@@ -127,6 +127,9 @@ class Normal:
         plt.tight_layout()
         plt.show()
 
+    def __str__(self) -> str:
+        return f"Normal distribution with mean {self.mean} and standart deviation {self.std}"
+
 if __name__ == '__main__':
     n = Normal(0, 1)
     n.plot(d=1.45, tail="left")
