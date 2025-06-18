@@ -37,19 +37,23 @@ class Normal:
             v = norm.ppf(alpha, self.mean, self.std)
         return v
 
-    def p_value(self, d: float, two_tailed: bool) -> float:
+    @validate_tail(("left", "right", "bilateral"))
+    def p_value(self, d: float, tail: Literal["left", "right", "bilateral"]) -> float:
         """
         Calculates the p-value from the normal distribution for a given statistic.
 
-        :param d: The calculated statistic (difference measure). Can be positive or negative.
-        :param two_tailed: If True, computes a two-tailed p-value;
-                           otherwise, computes a one-tailed p-value.
+        :param d: The calculated statistic. Can be positive or negative.
+        :param tail:
+            Specifies the type of hypothesis test:
+            - "right": one-tailed test (right side).
+            - "left": one-tailed test (left side).
+            - "bilateral": two-tailed test.
         :return: The p-value indicating the probability of observing a statistic
                  as extreme as `d` under the null hypothesis.
         """
-        if two_tailed:
+        if tail == "bilateral":
             return 2 * (1 - norm.cdf(abs(d), self.mean, self.std))
-        return norm.cdf(d, self.mean, self.std) if d > 0 else 1 - norm.cdf(d, self.mean, self.std)
+        return norm.cdf(d, self.mean, self.std) if tail == "left" else 1 - norm.cdf(d, self.mean, self.std)
 
     @validate_alpha
     @validate_tail(("left", "right", "bilateral", None))

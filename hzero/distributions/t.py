@@ -39,19 +39,23 @@ class TStudent:
             v = tdistribution.ppf(1 - alpha, self.df)
         return v
 
-    def p_value(self, d: float, two_tailed: bool) -> float:
+    @validate_tail(("left", "right", "bilateral"))
+    def p_value(self, d: float, tail: Literal["left", "right", "bilateral"]) -> float:
         """
         Calculates the p-value from the t-distribution for a given t-statistic.
 
-        :param d: The calculated t-statistic (difference measure). Can be positive or negative.
-        :param two_tailed: If True, computes a two-tailed p-value;
-                           otherwise, computes a one-tailed p-value.
+        :param d: The calculated t-statistic. Can be positive or negative.
+        :param tail:
+            Specifies the type of hypothesis test:
+            - "right": one-tailed test (right side).
+            - "left": one-tailed test (left side).
+            - "bilateral": two-tailed test.
         :return: The p-value indicating the probability of observing a t-statistic
                  as extreme as `d` under the null hypothesis.
         """
-        if two_tailed:
+        if tail == "bilateral":
             return 2 * (1 - tdistribution.cdf(abs(d), self.df))
-        return tdistribution.cdf(d, self.df) if d > 0 else 1 - tdistribution.cdf(d, self.df)
+        return tdistribution.cdf(d, self.df) if tail == "left" else 1 - tdistribution.cdf(d, self.df)
 
     @validate_alpha
     @validate_tail(("left", "right", "bilateral", None))
