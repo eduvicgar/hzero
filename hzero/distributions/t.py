@@ -113,7 +113,7 @@ class TStudent:
             fill_region(condition, f'Critic value = {d}')
 
         if d and alpha and tail:
-            label_statistic = f'Statistic = {d}'
+            label_statistic = f'Statistic = {round(d, 3)}'
             if tail == "right":
                 cv = self.critical_value(alpha, two_tailed=False)
                 fill_region(x >= cv, label_statistic)

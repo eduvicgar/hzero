@@ -115,7 +115,7 @@ class FSnedecor:
                 fill_region(condition, f"Critic value = {d}")
 
             if alpha and tail:
-                label_statistic = f"Statistic = {d}"
+                label_statistic = f'Statistic = {round(d, 3)}'
                 if tail == "right":
                     cv = self.critical_value(alpha, tail=tail)
                     fill_region(x >= cv, label_statistic)
