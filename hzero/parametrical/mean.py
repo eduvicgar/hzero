@@ -1,0 +1,77 @@
+from typing import Optional, Literal
+import math
+import numpy as np
+import numpy.typing as npt
+from hzero.distributions import Normal, TStudent
+
+
+class Mean:
+    def __init__(self,
+                 pob_data: npt.NDArray[float],
+                 tail: Literal["left", "right", "bilateral"],
+                 hzero_mean: float,
+                 std: Optional[float] = None,
+                 alpha: Optional[float] = None) -> None:
+        self.__hzero_mean = hzero_mean
+        self.__std = std
+        self.__alpha = alpha
+        self.__pob_data = pob_data
+        self.__pob_mean = np.mean(self.__pob_data)
+        self.__n = self.__pob_data.shape[0]
+        self.__quasivariance = math.sqrt(np.sum((self.__pob_data - self.__pob_mean) ** 2) / (self.__n - 1))
+        self.__tail = tail
+        self.__distribution = None
+        self.__statictic = None
+        self.__critical_value = None
+        self.__p_value = None
+        self._calculate_param()
+
+    def _calculate_param(self) -> None:
+        if self.__std:
+            self.__distribution = Normal(0, 1)
+            self.__statictic = (self.__pob_mean - self.__hzero_mean) / (self.__std / math.sqrt(self.__n))
+        else:
+            self.__distribution = TStudent(self.__n - 1)
+            self.__statictic = (self.__pob_mean - self.__hzero_mean) / (self.__quasivariance / math.sqrt(self.__n))
+        self.__p_value = self.__distribution.p_value(self.__statictic, self.__tail)
+        self.__critical_value = self.__distribution.critical_value(self.__alpha,
+                                                                   True if self.__tail == "bilateral" else False)
+
+    def hypothesis(self) -> str:
+        if self.__alpha:
+            if abs(self.__critical_value) < abs(self.__statictic):
+                return "Reject (via critical value)"
+            else:
+                return "No reject (via critical value)"
+        else:
+            if self.__p_value <= 0.01:
+                return "Reject (via p-value)"
+            elif 0.01 > self.__p_value > 0.2:
+                return "Doubtful region (via p-value)"
+            else:
+                return "No reject (via p-value)"
+
+    def summary(self) -> str:
+        return f"""
+        Parameter: mean
+        Standard Deviation: {self.__std if self.__std else "unknown"}\n
+        Null hypothesis: mean = {self.__hzero_mean}
+        Alternative hypothesis: {"mean < " + str(self.__hzero_mean) if self.__tail == "left" \
+                                 else "mean > " + str(self.__hzero_mean) if self.__tail == "right" \
+                                 else "mean != " + str(self.__hzero_mean)}\n
+        Distribution: {self.__distribution}
+        Statistic: {self.__statictic}
+        P-value: {self.__p_value}\n
+        Hypothesis conclusion: {self.hypothesis()}
+        """
+
+    def show(self) -> None:
+        self.__distribution.plot(d=self.__statictic, alpha=self.__alpha, tail=self.__tail)
+
+if __name__ == '__main__':
+    hzero = 40
+    data = np.array([42, 39, 41, 38, 40, 43, 39, 37, 44, 41])
+    significance = 0.05
+    test = Mean(pob_data=data, tail="bilateral", hzero_mean=hzero, alpha=significance)
+    print(test.summary())
+    test.show()
