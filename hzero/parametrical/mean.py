@@ -9,8 +9,8 @@ critical value, and p-value, and can display a plot of the distribution with rel
 import math
 import numpy as np
 import numpy.typing as npt
-from hzero.distributions import Normal, TStudent
 from config import MeanHypothesisParam
+from hzero.distributions import Normal, TStudent
 
 
 class Mean:
