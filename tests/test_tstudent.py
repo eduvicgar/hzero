@@ -19,14 +19,20 @@ def test_critic_value_invalid_alpha():
 
 def test_p_value_two_tailed():
     ttest = TStudent(10)
-    val = ttest.p_value(1.5, two_tailed=True)
+    val = ttest.p_value(1.5, tail="bilateral")
     expected = 2 * (1 - tdistribution.cdf(1.5, 10))
     assert round(val, 5) == round(expected, 5)
 
-def test_p_value_one_tailed():
+def test_p_value_left_tailed():
     ttest = TStudent(10)
-    val = ttest.p_value(1.5, two_tailed=False)
+    val = ttest.p_value(1.5, tail="left")
     expected = tdistribution.cdf(1.5, 10)
+    assert round(val, 5) == round(expected, 5)
+
+def test_p_value_right_tailed():
+    ttest = TStudent(10)
+    val = ttest.p_value(1.5, tail="right")
+    expected = 1 - tdistribution.cdf(1.5, 10)
     assert round(val, 5) == round(expected, 5)
 
 def test_plot_with_invalid_bilateral_tail():
@@ -55,9 +61,9 @@ def test_critic_value_varios_alphas(alpha, two_tailed):
 @pytest.mark.parametrize("d", [-3.0, -1.0, 0.0, 1.0, 3.0])
 def test_p_value_symmetry_two_tailed(d):
     t = TStudent(12)
-    p1 = t.p_value(d, two_tailed=True)
-    p2 = t.p_value(-d, two_tailed=True)
-    assert round(p1, 6) == round(p2, 6)  # La p-value bilateral debe ser simétrica
+    p1 = t.p_value(d, tail='bilateral')
+    p2 = t.p_value(-d, tail='bilateral')
+    assert round(p1, 6) == round(p2, 6)  # El p-valor bilateral debe ser simétrico
 
 def test_plot_invalid_alpha():
     t = TStudent(12)
