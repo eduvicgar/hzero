@@ -14,7 +14,7 @@ import numpy.typing as npt
 from hzero.distributions import Normal, TStudent
 
 @dataclass
-class HypothesisParam:
+class MeanHypothesisParam:
     """
     Defines a class that contains the parameters for the hypothesis test.
     """
@@ -35,7 +35,7 @@ class Mean:
     """
     def __init__(self,
                  pob_data: npt.NDArray[float],
-                 parameters: HypothesisParam) -> None:
+                 parameters: MeanHypothesisParam) -> None:
         self.__pob_data = pob_data
         self.__hzero_mean = parameters.hzero_mean
         self.__std = parameters.std
@@ -150,7 +150,7 @@ if __name__ == '__main__':
     }
 
     data = np.array([42, 39, 41, 38, 40, 43, 39, 37, 44, 41])
-    config = HypothesisParam(**config_data)
+    config = MeanHypothesisParam(**config_data)
     test = Mean(pob_data=data, parameters=config)
     print(test.summary())
     test.show()
