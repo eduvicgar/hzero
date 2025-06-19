@@ -16,12 +16,7 @@ from hzero.distributions import Normal, TStudent
 @dataclass
 class HypothesisParam:
     """
-
-
-    :param tail: Type of test tail - "left", "right", or "bilateral".
-    :param hzero_mean: Null hypothesis mean value.
-    :param std: Known population standard deviation. If None, uses sample standard deviation.
-    :param significance: Significance level for the test. If None, p-value is used instead.
+    Defines a class that contains the parameters for the hypothesis test.
     """
     hzero_mean: float
     std: Optional[float] = None
@@ -56,14 +51,23 @@ class Mean:
 
     @property
     def pob_mean(self):
+        """
+        Returns the mean of the population data.
+        """
         return np.mean(self.__pob_data)
 
     @property
     def n(self):
+        """
+        Returns the number of samples in the population data.
+        """
         return self.__pob_data.shape[0]
 
     @property
     def quasivariance(self):
+        """
+        Returns the quasivariance of the population data.
+        """
         return math.sqrt(np.sum((self.__pob_data - self.pob_mean) ** 2) /
                                          (self.n - 1))
 
