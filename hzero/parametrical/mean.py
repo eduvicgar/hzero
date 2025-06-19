@@ -1,3 +1,11 @@
+"""
+Module for hypothesis testing of a population mean.
+
+This module defines the `Mean` class, which performs hypothesis testing on a single sample mean.
+
+It supports one-tailed and two-tailed tests, automatic calculation of the test statistic,
+critical value, and p-value, and can display a plot of the distribution with relevant highlights.
+"""
 from typing import Optional, Literal
 import math
 import numpy as np
@@ -6,6 +14,18 @@ from hzero.distributions import Normal, TStudent
 
 
 class Mean:
+    """
+    Performs a hypothesis test for the population mean.
+
+    The test can be done assuming known population standard deviation
+    or unknown standard deviation, depending on the parameters.
+
+    :param pob_data: Sample data as a NumPy array.
+    :param tail: Type of test tail - "left", "right", or "bilateral".
+    :param hzero_mean: Null hypothesis mean value.
+    :param std: Known population standard deviation. If None, uses sample standard deviation.
+    :param alpha: Significance level for the test. If None, p-value is used instead.
+    """
     def __init__(self,
                  pob_data: npt.NDArray[float],
                  tail: Literal["left", "right", "bilateral"],
@@ -27,6 +47,12 @@ class Mean:
         self._calculate_param()
 
     def _calculate_param(self) -> None:
+        """
+        Computes all necessary parameters for the hypothesis test.
+
+        Sets the appropriate distribution (normal or t-distribution), calculates the test statistic,
+        critical value (if alpha is given), and p-value.
+        """
         if self.__std:
             self.__distribution = Normal(0, 1)
             self.__statictic = (self.__pob_mean - self.__hzero_mean) / (self.__std / math.sqrt(self.__n))
@@ -34,10 +60,20 @@ class Mean:
             self.__distribution = TStudent(self.__n - 1)
             self.__statictic = (self.__pob_mean - self.__hzero_mean) / (self.__quasivariance / math.sqrt(self.__n))
         self.__p_value = self.__distribution.p_value(self.__statictic, self.__tail)
-        self.__critical_value = self.__distribution.critical_value(self.__alpha,
-                                                                   True if self.__tail == "bilateral" else False)
+
+        if self.__alpha:
+            self.__critical_value = self.__distribution.critical_value(self.__alpha,
+                                                                       True if self.__tail == "bilateral" else False)
 
     def hypothesis(self) -> str:
+        """
+        Returns the result of the hypothesis test.
+
+        If alpha is provided, the decision is based on the critical value.
+        Otherwise, it uses the p-value for inference.
+
+        :return: Conclusion of the hypothesis test.
+        """
         if self.__alpha:
             if abs(self.__critical_value) < abs(self.__statictic):
                 return "Reject (via critical value)"
@@ -52,6 +88,14 @@ class Mean:
                 return "No reject (via p-value)"
 
     def summary(self) -> str:
+        """
+        Generates a detailed summary of the hypothesis test.
+
+        Includes hypotheses, distribution used, test statistic, p-value
+        and the test conclusion.
+
+        :return: Formatted string with test summary.
+        """
         return f"""
         Parameter: mean
         Standard Deviation: {self.__std if self.__std else "unknown"}\n
@@ -66,6 +110,11 @@ class Mean:
         """
 
     def show(self) -> None:
+        """
+        Displays a plot of the distribution used in the test.
+
+        Highlights the test statistic, rejection region(s), and the significance level.
+        """
         self.__distribution.plot(d=self.__statictic, alpha=self.__alpha, tail=self.__tail)
 
 if __name__ == '__main__':
