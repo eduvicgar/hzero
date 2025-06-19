@@ -1,44 +1,49 @@
-# hzero ($H_0$)
+# hzero (EN)
 
-**hzero** es una librería de inferencia estadística enfocada en la implementación de contrastes de hipótesis, tanto paramétricos como no paramétricos. Está pensada como una herramienta educativa y experimental para explorar el comportamiento de diferentes tests estadísticos bajo diversas condiciones.
+[Leer en español](docs/README.es.md)
 
-## 🚧 Estado del proyecto
+**hzero** is a statistical inference library focused on the implementation of hypothesis tests, both parametric and non-parametric. It is designed as an educational and experimental tool to explore the behavior of different statistical tests under various conditions.
 
-Este proyecto está actualmente en desarrollo activo. Aún no está disponible como paquete instalable.
+## 🚧 Project Status
 
-## ✨ Características principales
+This project is currently under active development. It is not yet available as an installable package.
 
-- Implementación de distribuciones usadas en contraste de hipótesis (como t de Student, chi-cuadrado, etc.)
-- Soporte para contrastes paramétricos
-- Visualización de resultados con **matplotlib**
-- Uso extensivo de **NumPy** para operaciones numéricas eficientes
+## ✨ Main Features
 
-## 📦 Tecnologías utilizadas
+- Implementation of distributions used in hypothesis testing (such as Student's t, chi-square, etc.)  
+- Support for parametric hypothesis tests  
+- Visualization of results with **matplotlib**  
+- Extensive use of **NumPy** for efficient numerical operations  
 
-- [SciPy](https://scipy.org/)
-- [NumPy](https://numpy.org/)
-- [matplotlib](https://matplotlib.org/)
+## 📦 Technologies Used
 
-## 🔧 Instalación
+- [SciPy](https://scipy.org/)  
+- [NumPy](https://numpy.org/)  
+- [matplotlib](https://matplotlib.org/)  
 
-> [!NOTE]
-> Por el momento, no hay una forma estándar de instalar hzero. Para usarlo, puedes clonar este repositorio:
+## 🔧 Installation
+
+> [!NOTE]  
+> For now, there is no standard way to install hzero. To use it, you can clone this repository:
 
 ```bash
-git clone https://github.com/eduvicgar/hzero.git
+git clone https://github.com/eduvicgar/hzero.git  
 cd hzero
 ```
 
-Luego puedes importar los módulos directamente desde tu entorno local de desarrollo.
+Then you can import the modules directly from your local development environment.
 
-## 📄 Licencia
-Este proyecto está bajo la licencia MIT. Consulta el archivo LICENSE para más detalles.
+## 📄 License
 
-## ✍️ Autor
+This project is licensed under the MIT License. See the LICENSE file for more details.
+
+## ✍️ Author
+
 eduvicgar
 
-## 📌 Próximas mejoras
-- Más contrastes de hipótesis paramétricos (varianza, diferencia de medias y cociente de varianzas)
-- Constrastes de hipótesis no paramétricos como chi cuadrado de Pearson y Kolgomorov-Smirnoff
-- Más tests automatizados
-- Más documentación y notebooks de ejemplo
+## 📌 Upcoming Improvements
+
+- More parametric hypothesis tests (variance, difference of means, and ratio of variances)  
+- Non-parametric hypothesis tests such as Pearson’s chi-square and Kolmogorov-Smirnov  
+- More automated tests  
+- More documentation and example notebooks  
