@@ -92,14 +92,14 @@ class Mean:
         """
         if self.__alpha:
             if abs(self.__critical_value) < abs(self.__statictic):
-                return "Reject (via critical value)"
-            return "No reject (via critical value)"
+                return f"Reject (statistic > critical value)"
+            return f"No reject (statistic < critical value)"
 
         if self.__p_value <= 0.01:
-            return "Reject (via p-value)"
+            return "Reject (p-value <= 0.01)"
         if 0.01 > self.__p_value > 0.2:
-            return "Doubtful region (via p-value)"
-        return "No reject (via p-value)"
+            return "Doubtful region (p-value in (0.01, 0.2))"
+        return "No reject (p-value > 0.2)"
 
     def summary(self) -> str:
         """
