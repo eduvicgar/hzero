@@ -39,8 +39,8 @@ class ChiSquare:
         return chi2.ppf(alpha, self.df) if tail == "left" else chi2.ppf(1 - alpha, self.df)
 
     @validate_d_nonnegative
-    @validate_tail(("left", "right"))
-    def p_value(self, d: float, tail: Literal["left", "right"]) -> float:
+    @validate_tail(("left", "right", "bilateral"))
+    def p_value(self, d: float, tail: Literal["left", "right", "bilateral"]) -> float:
         """
         Calculates the p-value from the chi square distribution for a given chisq-statistic.
 
@@ -50,7 +50,11 @@ class ChiSquare:
         :return: The p-value indicating the probability of observing a chisq-statistic
                  as extreme as `d` under the null hypothesis.
         """
-        return chi2.cdf(d, self.df) if tail == "left" else 1 - chi2.cdf(d, self.df)
+        if tail == "bilateral":
+            p_left = chi2.cdf(d, self.df)
+            p_right = chi2.sf(d, self.df)
+            return 2 * min(p_left, p_right)
+        return chi2.cdf(d, self.df) if tail == "left" else chi2.sf(d, self.df)
 
     @validate_alpha
     @validate_d_nonnegative

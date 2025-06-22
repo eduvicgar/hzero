@@ -41,8 +41,8 @@ class FSnedecor:
             else fdistribution.ppf(1 - alpha, self.df1, self.df2)
 
     @validate_d_nonnegative
-    @validate_tail(("left", "right"))
-    def p_value(self, d: float, tail: Literal["left", "right"]) -> float:
+    @validate_tail(("left", "right", "bilateral"))
+    def p_value(self, d: float, tail: Literal["left", "right", "bilateral"]) -> float:
         """
         Calculates the p-value from the F distribution for a given F-statistic.
 
@@ -52,8 +52,12 @@ class FSnedecor:
         :return: The p-value indicating the probability of observing an F-statistic
                  as extreme as `d` under the null hypothesis.
         """
+        if tail == "bilateral":
+            p_left = fdistribution.cdf(d, self.df1, self.df2)
+            p_right = fdistribution.sf(d, self.df1, self.df2)
+            return 2 * min(p_left, p_right)
         return fdistribution.cdf(d, self.df1, self.df2) if tail == "left" \
-            else 1 - fdistribution.cdf(d, self.df1, self.df2)
+            else fdistribution.sf(d, self.df1, self.df2)
 
     @validate_alpha
     @validate_d_nonnegative
