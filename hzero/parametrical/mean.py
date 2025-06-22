@@ -101,7 +101,7 @@ class Mean:
             return "Doubtful region (p-value in (0.01, 0.2))"
         return "No reject (p-value > 0.2)"
 
-    def summary(self) -> str:
+    def report(self) -> str:
         """
         Generates a detailed summary of the hypothesis test.
 
@@ -141,5 +141,5 @@ if __name__ == '__main__':
     data = np.array([42, 39, 41, 38, 40, 43, 39, 37, 44, 41])
     config = MeanHypothesisParam(**config_data)
     test = Mean(pob_data=data, parameters=config)
-    print(test.summary())
+    print(test.report())
     test.show()
