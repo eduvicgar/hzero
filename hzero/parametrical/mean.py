@@ -58,8 +58,7 @@ class Mean:
         """
         Returns the quasivariance of the population data.
         """
-        return math.sqrt(np.sum((self.__pob_data - self.pob_mean) ** 2) /
-                                         (self.n - 1))
+        return np.sum((self.__pob_data - self.pob_mean) ** 2) / (self.n - 1)
 
     def _calculate_param(self) -> None:
         """
@@ -75,7 +74,7 @@ class Mean:
         else:
             self.__distribution = TStudent(self.n - 1)
             self.__statictic = ((self.pob_mean - self.__hzero_mean) /
-                                (self.quasivariance / math.sqrt(self.n)))
+                                (math.sqrt(self.quasivariance / self.n)))
         self.__p_value = self.__distribution.p_value(self.__statictic, self.__tail)
 
         if self.__alpha:
