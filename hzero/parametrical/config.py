@@ -11,3 +11,13 @@ class MeanHypothesisParam:
     std: Optional[float] = None
     significance: Optional[float] = None
     tail: Literal["left", "right", "bilateral"] = "bilateral"
+
+@dataclass
+class VarianceHypothesisParam:
+    """
+    Defines a class that contains the parameters for the variance hypothesis test.
+    """
+    hzero_var: float
+    mean: Optional[float] = None
+    significance: Optional[float] = None
+    tail: Literal["left", "right", "bilateral"] = "bilateral"
