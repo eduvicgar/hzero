@@ -92,8 +92,8 @@ class Mean:
         """
         if self.__alpha:
             if abs(self.__critical_value) < abs(self.__statictic):
-                return f"Reject (statistic > critical value)"
-            return f"No reject (statistic < critical value)"
+                return "Reject (statistic > critical value)"
+            return "No reject (statistic < critical value)"
 
         if self.__p_value <= 0.01:
             return "Reject (p-value <= 0.01)"
