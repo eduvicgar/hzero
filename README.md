@@ -6,14 +6,18 @@
 
 ## 🚧 Project Status
 
-This project is currently under active development. It is not yet available as an installable package.
+This project is currently under active development.
 
 ## ✨ Main Features
 
 - Implementation of distributions used in hypothesis testing (such as Student's t, chi-square, etc.)  
-- Support for parametric hypothesis tests  
+- Support for parametric hypothesis tests (mean and variance)
 - Visualization of results with **matplotlib**  
 - Extensive use of **NumPy** for efficient numerical operations  
+
+> [!WARNING]
+> Most of the classes provided aren't thoroughly tested, so it's possible to get unexpected results in edge cases.
+> These bugs will be fixed throughout the development of the library. You may also submit an issue if you encounter a bug.
 
 ## 📦 Technologies Used
 
@@ -24,7 +28,7 @@ This project is currently under active development. It is not yet available as a
 ## 🔧 Installation
 
 > [!NOTE]  
-> For now, there is no standard way to install hzero. To use it, you can clone this repository:
+> Currently, there is no standard way to install hzero. To use it, you can clone this repository:
 
 ```bash
 git clone https://github.com/eduvicgar/hzero.git  
@@ -43,7 +47,7 @@ eduvicgar
 
 ## 📌 Upcoming Improvements
 
-- More parametric hypothesis tests (variance, difference of means, and ratio of variances)  
+- Additional parametric hypothesis tests (difference of means and ratio of variances)  
 - Non-parametric hypothesis tests such as Pearson’s chi-square and Kolmogorov-Smirnov  
-- More automated tests  
-- More documentation and example notebooks  
+- Additional unit tests  
+- Additional documentation and example notebooks  

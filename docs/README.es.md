@@ -1,17 +1,25 @@
 # hzero (ES)
 
-**hzero** es una librería de inferencia estadística enfocada en la implementación de contrastes de hipótesis, tanto paramétricos como no paramétricos. Está pensada como una herramienta educativa y experimental para explorar el comportamiento de diferentes tests estadísticos bajo diversas condiciones.
+**hzero** es una librería de inferencia estadística enfocada en la implementación de contrastes de hipótesis, 
+tanto paramétricos como no paramétricos. 
+Está pensada como una herramienta educativa y experimental para explorar el comportamiento de diferentes tests 
+estadísticos bajo diversas condiciones.
 
 ## 🚧 Estado del proyecto
 
-Este proyecto está actualmente en desarrollo activo. Aún no está disponible como paquete instalable.
+Este proyecto está actualmente en desarrollo activo.
 
 ## ✨ Características principales
 
 - Implementación de distribuciones usadas en contraste de hipótesis (como t de Student, chi-cuadrado, etc.)
-- Soporte para contrastes paramétricos
+- Soporte para contrastes paramétricos (media y varianza)
 - Visualización de resultados con **matplotlib**
 - Uso extensivo de **NumPy** para operaciones numéricas eficientes
+
+> [!WARNING]
+> La mayoría de las clases proporcionadas no han sido rigurosamente testeadas, lo que puede dar lugar a resultados inesperados en casos extremos.
+> A lo largo del desarrollo de la librería se corregirán aquellos fallos que puedan surgir. También, puedes notificar la presencia
+> de fallos como un issue.
 
 ## 📦 Tecnologías utilizadas
 
@@ -38,7 +46,7 @@ Este proyecto está bajo la licencia MIT. Consulta el archivo LICENSE para más 
 eduvicgar
 
 ## 📌 Próximas mejoras
-- Más contrastes de hipótesis paramétricos (varianza, diferencia de medias y cociente de varianzas)
+- Más contrastes de hipótesis paramétricos (diferencia de medias y cociente de varianzas)
 - Constrastes de hipótesis no paramétricos como chi cuadrado de Pearson y Kolgomorov-Smirnoff
 - Más tests automatizados
 - Más documentación y notebooks de ejemplo
