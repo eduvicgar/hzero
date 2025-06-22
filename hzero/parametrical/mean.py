@@ -103,12 +103,12 @@ class Mean:
 
     def report(self) -> str:
         """
-        Generates a detailed summary of the hypothesis test.
+        Generates a detailed report of the hypothesis test.
 
         Includes hypotheses, distribution used, test statistic, p-value
         and the test conclusion.
 
-        :return: Formatted string with test summary.
+        :return: Formatted string with test report.
         """
         return f"""
         Parameter: mean
