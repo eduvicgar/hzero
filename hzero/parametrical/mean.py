@@ -33,7 +33,7 @@ class Mean:
         self.__tail = parameters.tail
 
         self.__distribution = None
-        self.__statictic = None
+        self.__statistic = None
         self.__critical_value = None
         self.__p_value = None
 
@@ -69,13 +69,13 @@ class Mean:
         """
         if self.__std:
             self.__distribution = Normal(0, 1)
-            self.__statictic = ((self.pob_mean - self.__hzero_mean) /
+            self.__statistic = ((self.pob_mean - self.__hzero_mean) /
                                 (self.__std / math.sqrt(self.n)))
         else:
             self.__distribution = TStudent(self.n - 1)
-            self.__statictic = ((self.pob_mean - self.__hzero_mean) /
+            self.__statistic = ((self.pob_mean - self.__hzero_mean) /
                                 (math.sqrt(self.quasivariance / self.n)))
-        self.__p_value = self.__distribution.p_value(self.__statictic, self.__tail)
+        self.__p_value = self.__distribution.p_value(self.__statistic, self.__tail)
 
         if self.__alpha:
             self.__critical_value = self.__distribution.critical_value(self.__alpha,
@@ -91,7 +91,7 @@ class Mean:
         :return: Conclusion of the hypothesis test.
         """
         if self.__alpha:
-            if abs(self.__critical_value) < abs(self.__statictic):
+            if abs(self.__critical_value) < abs(self.__statistic):
                 return "Reject (statistic > critical value)"
             return "No reject (statistic < critical value)"
 
@@ -118,7 +118,7 @@ class Mean:
                                  else "mean > " + str(self.__hzero_mean) if self.__tail == "right" \
                                  else "mean != " + str(self.__hzero_mean)}\n
         Distribution: {self.__distribution}
-        Statistic: {self.__statictic}
+        Statistic: {self.__statistic}
         P-value: {self.__p_value}\n
         Hypothesis conclusion: {self.hypothesis()}
         """
@@ -129,7 +129,7 @@ class Mean:
 
         Highlights the test statistic, rejection region(s), and the significance level.
         """
-        self.__distribution.plot(d=self.__statictic, alpha=self.__alpha, tail=self.__tail)
+        self.__distribution.plot(d=self.__statistic, alpha=self.__alpha, tail=self.__tail)
 
 if __name__ == '__main__':
     config_data = {
