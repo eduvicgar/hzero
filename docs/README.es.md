@@ -17,9 +17,9 @@ Este proyecto está actualmente en desarrollo activo.
 - Uso extensivo de **NumPy** para operaciones numéricas eficientes
 
 > [!WARNING]
-> La mayoría de las clases proporcionadas no han sido rigurosamente testeadas, lo que puede dar lugar a resultados inesperados en casos extremos.
-> A lo largo del desarrollo de la librería se corregirán aquellos fallos que puedan surgir. También, puedes notificar la presencia
-> de fallos como un issue.
+> La mayoría de las clases proporcionadas no han sido meticulosamente testeadas, lo que puede dar lugar a resultados inesperados en casos extremos.
+> A lo largo del desarrollo de la librería se corregirán aquellos fallos que puedan surgir. También puedes presentar un issue si te encuentras
+> con un error.
 
 ## 📦 Tecnologías utilizadas
 
