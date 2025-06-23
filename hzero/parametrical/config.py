@@ -21,3 +21,15 @@ class VarianceHypothesisParam:
     mean: Optional[float] = None
     significance: Optional[float] = None
     tail: Literal["left", "right", "bilateral"] = "bilateral"
+
+@dataclass
+class MeanDiffHypothesisParam:
+    """
+    Defines a class that contains the parameters for the mean difference hypothesis test.
+    """
+    hzero_meandiff: float
+    std1: Optional[float] = None
+    std2: Optional[float] = None
+    stds_equal: Optional[bool] = None
+    significance: Optional[float] = None
+    tail: Literal["left", "right", "bilateral"] = "bilateral"
