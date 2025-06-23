@@ -1,3 +1,11 @@
+"""
+Module for hypothesis testing of a populations' difference of means.
+
+This module defines the `MeanDiff` class, which performs hypothesis testing on two sample means.
+
+It supports one-tailed and two-tailed tests, automatic calculation of the test statistic,
+critical value, and p-value, and can display a plot of the distribution with relevant highlights.
+"""
 import math
 import numpy as np
 import numpy.typing as npt
@@ -6,6 +14,16 @@ from hzero.distributions import Normal, TStudent
 
 
 class MeanDiff:
+    """
+    Performs a hypothesis test for the populations' difference of means.
+
+    The test can be done assuming known population standard deviation
+    or unknown standard deviation, depending on the parameters.
+
+    :param x_data: Sample data of x sample as a NumPy array.
+    :param y_data: Sample data of y sample as a NumPy array.
+    :param parameters: Configuration object.
+    """
     def __init__(self,
                  x_data: npt.NDArray[np.float64],
                  y_data: npt.NDArray[np.float64],
