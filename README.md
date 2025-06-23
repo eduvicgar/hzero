@@ -11,7 +11,7 @@ This project is currently under active development.
 ## ✨ Main Features
 
 - Implementation of distributions used in hypothesis testing (such as Student's t, chi-square, etc.)  
-- Support for parametric hypothesis tests (mean, variance and difference of means)
+- Support for parametric hypothesis tests (mean, variance, difference of means and variances ratio)
 - Visualization of results with **matplotlib**  
 - Extensive use of **NumPy** for efficient numerical operations  
 
@@ -46,8 +46,6 @@ This project is licensed under the MIT License. See the LICENSE file for more de
 eduvicgar
 
 ## 📌 Upcoming Improvements
-
-- Additional parametric hypothesis tests (ratio of variances)  
 - Non-parametric hypothesis tests such as Pearson’s chi-square and Kolmogorov-Smirnov  
 - Additional unit tests  
 - Additional documentation and example notebooks  
