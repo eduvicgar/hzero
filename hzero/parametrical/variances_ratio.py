@@ -1,7 +1,7 @@
 """
 Module for hypothesis testing of a populations' ratio of variances.
 
-This module defines the `VariancesRatio` class, which performs hypothesis testing on two sample means.
+This module defines the `VariancesRatio` class, which performs hypothesis testing on the ratio of variances of two populations.
 
 It supports one-tailed and two-tailed tests, automatic calculation of the test statistic,
 critical value, and p-value, and can display a plot of the distribution with relevant highlights.
