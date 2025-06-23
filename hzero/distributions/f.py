@@ -3,7 +3,7 @@ This module implements a class for the F distribution.
 With this class you can compute critic values, p-values and plot the distribution
 using the methods provided to the class.
 """
-from typing import Optional, Literal
+from typing import Optional, Literal, Tuple
 import numpy as np
 from matplotlib import pyplot as plt
 from matplotlib.patches import Patch
@@ -22,8 +22,10 @@ class FSnedecor:
         self.df2 = df2
 
     @validate_alpha
-    @validate_tail(("left", "right"))
-    def critical_value(self, alpha: float, tail: Literal["left", "right"]) -> float:
+    @validate_tail(("left", "right", "bilateral"))
+    def critical_value(self,
+                       alpha: float,
+                       tail: Literal["left", "right", "bilateral"]) -> float | Tuple[float, float]:
         """
         Calculates the critical value from the F distribution based on
         the given significance level.
@@ -32,11 +34,16 @@ class FSnedecor:
                       Determines the probability threshold.
         :param tail: Determines the type of hypothesis test:
                      "right": one-tailed test (right side),
-                     "left": one-tailed test (left side).
+                     "left": one-tailed test (left side),
+                     "bilateral": two-tailed test.
         :return: The critical F-value corresponding to the given alpha level and test type.
         :raises ValueError: If the alpha value is not in the range (0, 1) or tail is not
                             left or right.
         """
+        if tail == "bilateral":
+            lower = fdistribution.ppf(alpha / 2, self.df1, self.df2)
+            upper = fdistribution.ppf(1 - alpha / 2, self.df1, self.df2)
+            return lower, upper
         return fdistribution.ppf(alpha, self.df1, self.df2) if tail == "left" \
             else fdistribution.ppf(1 - alpha, self.df1, self.df2)
 

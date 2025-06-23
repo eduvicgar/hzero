@@ -3,7 +3,7 @@ This module implements a class for the chi square distribution.
 With this class you can compute critic values, p-values and plot the distribution
 using the methods provided to the class.
 """
-from typing import Optional, Literal
+from typing import Optional, Literal, Tuple
 import numpy as np
 from matplotlib import pyplot as plt
 from matplotlib.patches import Patch
@@ -21,8 +21,10 @@ class ChiSquare:
         self.df = df
 
     @validate_alpha
-    @validate_tail(("left", "right"))
-    def critical_value(self, alpha: float, tail: Literal["left", "right"]) -> float:
+    @validate_tail(("left", "right", "bilateral"))
+    def critical_value(self,
+                       alpha: float,
+                       tail: Literal["left", "right", "bilateral"]) -> float | Tuple[float, float]:
         """
         Calculates the critical value from the chi square distribution based on
         the given significance level.
@@ -31,11 +33,16 @@ class ChiSquare:
                       Determines the probability threshold.
         :param tail: Determines the type of hypothesis test:
                      "right": one-tailed test (right side),
-                     "left": one-tailed test (left side).
+                     "left": one-tailed test (left side),
+                     "bilateral": two-tailed test.
         :return: The critical chisq-value corresponding to the given alpha level and test type.
         :raises ValueError: If the alpha value is not in the range (0, 1) or tail is not
                             left or right.
         """
+        if tail == "bilateral":
+            lower = chi2.ppf(alpha / 2, self.df)
+            upper = chi2.ppf(1 - alpha / 2, self.df)
+            return lower, upper
         return chi2.ppf(alpha, self.df) if tail == "left" else chi2.ppf(1 - alpha, self.df)
 
     @validate_d_nonnegative
