@@ -33,3 +33,12 @@ class MeanDiffHypothesisParam:
     stds_equal: Optional[bool] = None
     significance: Optional[float] = None
     tail: Literal["left", "right", "bilateral"] = "bilateral"
+
+@dataclass
+class VariancesRatioHypothesisParam:
+    """
+    Defines a class that contains the parameters for the variances ratio hypothesis test.
+    """
+    hzero_vardiff: float
+    significance: Optional[float] = None
+    tail: Literal["left", "right", "bilateral"] = "bilateral"
