@@ -12,7 +12,7 @@ Este proyecto está actualmente en desarrollo activo.
 ## ✨ Características principales
 
 - Implementación de distribuciones usadas en contraste de hipótesis (como t de Student, chi-cuadrado, etc.)
-- Soporte para contrastes paramétricos (media y varianza)
+- Soporte para contrastes paramétricos (media, varianza y diferencia de medias)
 - Visualización de resultados con **matplotlib**
 - Uso extensivo de **NumPy** para operaciones numéricas eficientes
 
@@ -46,7 +46,7 @@ Este proyecto está bajo la licencia MIT. Consulta el archivo LICENSE para más 
 eduvicgar
 
 ## 📌 Próximas mejoras
-- Más contrastes de hipótesis paramétricos (diferencia de medias y cociente de varianzas)
+- Más contrastes de hipótesis paramétricos (cociente de varianzas)
 - Constrastes de hipótesis no paramétricos como chi cuadrado de Pearson y Kolgomorov-Smirnoff
 - Más tests automatizados
 - Más documentación y notebooks de ejemplo
