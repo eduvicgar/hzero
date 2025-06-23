@@ -83,9 +83,17 @@ class Variance:
         :return: Conclusion of the hypothesis test.
         """
         if self.__alpha:
-            if self.__critical_value < self.__statistic:
-                return "Reject (statistic > critical value)"
-            return "No reject (statistic < critical value)"
+            if self.__tail == "bilateral":
+                return "Reject (statistic in rejection region)" \
+                    if self.__statistic < self.__critical_value[0] or self.__statistic > self.__critical_value[1] \
+                    else "No reject (statistic out of rejection region)"
+            if self.__tail == "left":
+                return "Reject (statistic < critical value)" \
+                    if self.__critical_value > self.__statistic \
+                    else "No reject (statistic > critical value)"
+            return "Reject (statistic > critical value)" \
+                if self.__critical_value < self.__statistic \
+                else "No reject (statistic < critical value)"
 
         if self.__p_value <= 0.01:
             return "Reject (p-value <= 0.01)"
