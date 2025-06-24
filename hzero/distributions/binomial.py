@@ -27,7 +27,7 @@ class Binomial(BaseDiscrete):
     @override
     def plot(self) -> None:
         x = np.arange(0, self.n + 1)
-        y = np.array([self.probability(i) for i in x])
+        y = np.array([self.probability(int(i)) for i in x])
         plt.stem(x, y, basefmt=" ")
         plt.show()
 
