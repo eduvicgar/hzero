@@ -27,11 +27,27 @@ class Geometric(BaseDiscrete):
         return (1 - self.p) / self.p**2
 
     @override
+    def cumulative_prob(self, k: int) -> float:
+        if k < 1:
+            return 0.0
+        return sum(self.probability(i) for i in range(1, k + 1))
+
+    @override
     def plot(self) -> None:
         x = np.arange(1, self.max_k + 1)
         y = np.array([self.probability(int(i)) for i in x])
         plt.stem(x, y, basefmt=" ")
         plt.gca().xaxis.set_major_locator(MaxNLocator(integer=True)) # Fuerza a indicar enteros en el eje x del plot
+        plt.show()
+
+    @override
+    def cumulative_plot(self) -> None:
+        x = np.arange(1, self.max_k + 1)
+        y = np.array([self.cumulative_prob(int(k)) for k in x])
+        plt.step(x, y, where='post')
+        plt.gca().xaxis.set_major_locator(MaxNLocator(integer=True))
+        plt.ylim(0, 1.05)
+        plt.grid(True, linestyle="--", alpha=0.5)
         plt.show()
 
     def __iter__(self) -> Iterator[Tuple[int, float]]:
@@ -49,9 +65,8 @@ if __name__ == '__main__':
     test = Geometric(p=1/3, max_k=50)
     print(test.mean)
     print(test.var)
-    suma = 0
     for prob in test:
         print(prob)
-        suma += prob[1]
-    print(suma)
+    print(test.cumulative_prob(50))
     test.plot()
+    test.cumulative_plot()

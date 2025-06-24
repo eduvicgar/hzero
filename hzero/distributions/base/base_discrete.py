@@ -17,7 +17,15 @@ class BaseDiscrete(ABC):
         pass
 
     @abstractmethod
+    def cumulative_prob(self, k: int):
+        pass
+
+    @abstractmethod
     def plot(self):
+        pass
+
+    @abstractmethod
+    def cumulative_plot(self):
         pass
 
     @abstractmethod

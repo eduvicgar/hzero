@@ -2,6 +2,7 @@ import math
 from typing import override, Iterator, Tuple
 import numpy as np
 from matplotlib import pyplot as plt
+from matplotlib.ticker import MaxNLocator
 from base.base_discrete import BaseDiscrete
 
 
@@ -27,10 +28,27 @@ class Binomial(BaseDiscrete):
         return self.n * self.p * (1 - self.p)
 
     @override
+    def cumulative_prob(self, k: int) -> float:
+        if k < 0:
+            return 0.0
+        return sum(self.probability(i) for i in range(0, k + 1))
+
+    @override
     def plot(self) -> None:
         x = np.arange(0, self.n + 1)
         y = np.array([self.probability(int(i)) for i in x])
         plt.stem(x, y, basefmt=" ")
+        plt.gca().xaxis.set_major_locator(MaxNLocator(integer=True))  # Fuerza a indicar enteros en el eje x del plot
+        plt.show()
+
+    @override
+    def cumulative_plot(self) -> None:
+        x = np.arange(0, self.n + 1)
+        y = np.array([self.cumulative_prob(int(k)) for k in x])
+        plt.step(x, y, where='post')
+        plt.gca().xaxis.set_major_locator(MaxNLocator(integer=True))
+        plt.ylim(0, 1.05)
+        plt.grid(True, linestyle="--", alpha=0.5)
         plt.show()
 
     def __iter__(self) -> Iterator[Tuple[int, float]]:
@@ -48,9 +66,8 @@ if __name__ == '__main__':
     test = Binomial(n=10, p=0.5)
     print(test.mean)
     print(test.var)
-    suma = 0
     for prob in test:
         print(prob)
-        suma += prob[1]
-    print(suma)
+    print(test.cumulative_prob(10))
     test.plot()
+    test.cumulative_plot()
