@@ -12,6 +12,8 @@ class Binomial(BaseDiscrete):
 
     @override
     def probability(self, k: int) -> float:
+        if k < 0 or k > self.n:
+            raise ValueError("k must be between 0 and n")
         return math.comb(self.n, k) * self.p**k * (1-self.p)**(self.n - k)
 
     @property
@@ -50,6 +52,5 @@ if __name__ == '__main__':
     for prob in test:
         print(prob)
         suma += prob[1]
-        if prob[0] == test.n:
-            print(suma)
+    print(suma)
     test.plot()
