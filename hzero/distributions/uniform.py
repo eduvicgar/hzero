@@ -1,7 +1,6 @@
 from typing import override
 import numpy as np
 from matplotlib import pyplot as plt
-from scipy.stats import uniform
 from base.base_continuous import BaseContinuous
 
 
@@ -20,7 +19,11 @@ class Uniform(BaseContinuous):
 
     @override
     def cumulative_prob(self, x: float) -> float:
-        return uniform.cdf(x, loc=self.low, scale=self.high - self.low)
+        if x < self.low:
+            return 0
+        if x > self.high:
+            return 1
+        return (x - self.low)/(self.high - self.low)
 
     @property
     @override
