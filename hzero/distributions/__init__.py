@@ -2,5 +2,9 @@ from .t import TStudent
 from .f import FSnedecor
 from .chisq import ChiSquare
 from .normal import Normal
-
-__all__ = ['TStudent', 'FSnedecor', 'ChiSquare', "Normal"]
+from .binomial import Binomial
+from .uniform import Uniform
+from .neg_binomial import NegativeBinomial
+from .poisson import Poisson
+from .exponential import Exponential
+from .geometric import Geometric
