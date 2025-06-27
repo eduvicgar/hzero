@@ -1,5 +1,5 @@
 import math
-from typing import override, Iterator, Tuple
+from typing import override, Iterator, Tuple, Optional, Sequence
 import numpy as np
 from matplotlib import pyplot as plt
 from matplotlib.ticker import MaxNLocator
@@ -7,9 +7,23 @@ from base.base_discrete import BaseDiscrete
 
 
 class Binomial(BaseDiscrete):
-    def __init__(self, n: int, p: float):
+    def __init__(self, n: int, p: Optional[float] = None, data: Optional[Sequence[int]] = None):
+        if p is None and (data is None or n is None):
+            raise ValueError("If not p, you must provide data or n")
+        if p is None:
+            p = self._estimate_mle_p(n, data)
         self.n = n
         self.p = p
+
+    @staticmethod
+    def _estimate_mle_p(n: int, data: Sequence[int]) -> float:
+        """
+        MLE estimation of p parameter
+        """
+        data = np.array(data)
+        total_successes = np.sum(data)
+        total_trials = len(data) * n
+        return total_successes / total_trials
 
     @override
     def probability(self, k: int) -> float:

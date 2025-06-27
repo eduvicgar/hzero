@@ -1,5 +1,5 @@
 import math
-from typing import override
+from typing import override, Optional, Sequence
 import numpy as np
 from matplotlib import pyplot as plt
 from scipy.stats import expon
@@ -7,8 +7,19 @@ from base.base_continuous import BaseContinuous
 
 
 class Exponential(BaseContinuous):
-    def __init__(self, lmbda: float):
+    def __init__(self, lmbda: Optional[float] = None, data: Optional[Sequence[int]] = None):
+        if lmbda is None and data is None:
+            raise ValueError("you must specify either lambda or data")
+        if lmbda is None:
+            lmbda = self._estimate_mle_lmdba(data)
         self.lmbda = lmbda
+
+    @staticmethod
+    def _estimate_mle_lmdba(data: Sequence[int]) -> float:
+        data = np.array(data)
+        if np.any(data < 0):
+            raise ValueError("All values must be ≥ 0")
+        return 1 / np.mean(data)
 
     @override
     def density(self, x: float) -> float:

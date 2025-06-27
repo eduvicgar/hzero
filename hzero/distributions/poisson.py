@@ -1,5 +1,5 @@
 import math
-from typing import override, Iterator, Tuple
+from typing import override, Iterator, Tuple, Optional, Sequence
 import numpy as np
 from matplotlib import pyplot as plt
 from matplotlib.ticker import MaxNLocator
@@ -7,9 +7,20 @@ from base.base_discrete import BaseDiscrete
 
 
 class Poisson(BaseDiscrete):
-    def __init__(self, lmbda: float, max_k: int) -> None:
+    def __init__(self, max_k: int, lmbda: Optional[float] = None, data: Optional[Sequence[int]] = None) -> None:
+        if lmbda is None and data is None:
+            raise ValueError("you must specify either lambda or data")
+        if lmbda is None:
+            lmbda = self._estimate_mle_lmdba(data)
         self.lmbda = lmbda
         self.max_k = max_k
+
+    @staticmethod
+    def _estimate_mle_lmdba(data: Sequence[int]) -> float:
+        data = np.array(data)
+        if np.any(data < 0):
+            raise ValueError("Los datos deben ser ≥ 0.")
+        return np.mean(data)
 
     @override
     def probability(self, k: int) -> float:

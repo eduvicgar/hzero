@@ -1,5 +1,5 @@
 import math
-from typing import override, Iterator, Tuple
+from typing import override, Iterator, Tuple, Optional, Sequence
 import numpy as np
 from matplotlib import pyplot as plt
 from matplotlib.ticker import MaxNLocator
@@ -7,10 +7,25 @@ from base.base_discrete import BaseDiscrete
 
 
 class NegativeBinomial(BaseDiscrete):
-    def __init__(self, n: int, p: float, max_k: int):
-        self.n = n
+    def __init__(self, r: int, max_k: int, p: Optional[float] = None, data: Optional[Sequence[int]] = None):
+        if p is None and (data is None or r is None):
+            raise ValueError("If not p, you must provide data or n")
+        if p is None:
+            p = self._estimate_mle_p(r, data)
+        self.n = r
         self.p = p
         self.max_k = max_k
+
+    @staticmethod
+    def _estimate_mle_p(r: int, data: Sequence[int]) -> float:
+        """
+        MLE estimation of p parameter
+        """
+        data = np.array(data)
+        if np.any(data < 0):
+            raise ValueError("data must be whole numbers ≥ 0.")
+        x_bar = np.mean(data)
+        return r / (r + x_bar)
 
     @override
     def probability(self, k: int) -> float:
@@ -64,7 +79,7 @@ class NegativeBinomial(BaseDiscrete):
         return result
 
 if __name__ == '__main__':
-    test = NegativeBinomial(n=5, p=0.3, max_k=30)
+    test = NegativeBinomial(r=5, max_k=30, p=0.3)
     print(test.mean)
     print(test.var)
     suma = 0

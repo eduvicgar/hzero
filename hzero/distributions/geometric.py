@@ -1,4 +1,4 @@
-from typing import override, Iterator, Tuple
+from typing import override, Iterator, Tuple, Optional, Sequence
 import numpy as np
 from matplotlib import pyplot as plt
 from matplotlib.ticker import MaxNLocator
@@ -6,9 +6,23 @@ from base.base_discrete import BaseDiscrete
 
 
 class Geometric(BaseDiscrete):
-    def __init__(self, p: float, max_k: int):
+    def __init__(self, max_k: int, p: Optional[float] = None, data: Optional[Sequence[int]] = None) -> None:
+        if p is None and data is None:
+            raise ValueError("you must specify either p or data")
+        if p is None:
+            p = self._estimate_mle_p(data)
         self.p = p
         self.max_k = max_k
+
+    @staticmethod
+    def _estimate_mle_p(data: Sequence[int]) -> float:
+        """
+        MLE estimation of p parameter
+        """
+        data = np.array(data)
+        if np.any(data < 1):
+            raise ValueError("All values must be ≥ 1.")
+        return 1 / np.mean(data)
 
     @override
     def probability(self, k: int) -> float:
