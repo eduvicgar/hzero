@@ -74,7 +74,7 @@ class Poisson(BaseDiscrete):
         return result
 
 if __name__ == '__main__':
-    test = Poisson(5, 10)
+    test = Poisson(lmbda=10, max_k=20)
     print(test.mean)
     print(test.var)
     suma = 0

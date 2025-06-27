@@ -56,7 +56,7 @@ class Exponential(BaseContinuous):
         plt.show()
 
 if __name__ == '__main__':
-    test = Exponential(3)
+    test = Exponential(lmbda=3)
     print(test.mean)
     print(test.var)
     test.plot()
