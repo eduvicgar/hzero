@@ -6,6 +6,7 @@ This module defines the `VariancesRatio` class, which performs hypothesis testin
 It supports one-tailed and two-tailed tests, automatic calculation of the test statistic,
 critical value, and p-value, and can display a plot of the distribution with relevant highlights.
 """
+from typing import Sequence
 import numpy as np
 import numpy.typing as npt
 from config import VariancesRatioHypothesisParam
@@ -24,11 +25,11 @@ class VariancesRatio:
     :param parameters: Configuration object.
     """
     def __init__(self,
-                 x_data: npt.NDArray[np.float64],
-                 y_data: npt.NDArray[np.float64],
+                 x_data: Sequence[float],
+                 y_data: Sequence[float],
                  parameters: VariancesRatioHypothesisParam):
-        self.__x_data = x_data
-        self.__y_data = y_data
+        self.__x_data = np.array(x_data)
+        self.__y_data = np.array(y_data)
         self.__hzero_vardiff = parameters.hzero_vardiff
         self.__alpha = parameters.significance
         self.__tail = parameters.tail
