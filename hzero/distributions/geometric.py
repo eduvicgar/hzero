@@ -6,13 +6,19 @@ from base.base_discrete import BaseDiscrete
 
 
 class Geometric(BaseDiscrete):
-    def __init__(self, max_k: int, p: Optional[float] = None, data: Optional[Sequence[int]] = None) -> None:
+    def __init__(self,
+                 max_k: int,
+                 p: Optional[float] = None,
+                 data: Optional[Sequence[int]] = None,
+                 estimated_param: int = 0) -> None:
         if p is None and data is None:
             raise ValueError("you must specify either p or data")
         if p is None:
             p = self._estimate_mle_p(data)
+            estimated_param = 1
         self.p = p
         self.max_k = max_k
+        self.estimated_param = estimated_param
 
     @staticmethod
     def _estimate_mle_p(data: Sequence[int]) -> float:

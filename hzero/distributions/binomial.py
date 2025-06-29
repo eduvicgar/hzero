@@ -7,13 +7,19 @@ from base.base_discrete import BaseDiscrete
 
 
 class Binomial(BaseDiscrete):
-    def __init__(self, n: int, p: Optional[float] = None, data: Optional[Sequence[int]] = None):
+    def __init__(self,
+                 n: int,
+                 p: Optional[float] = None,
+                 data: Optional[Sequence[int]] = None,
+                 estimated_param: int = 0):
         if p is None and (data is None or n is None):
             raise ValueError("If not p, you must provide data or n")
         if p is None:
             p = self._estimate_mle_p(n, data)
+            estimated_param = 1
         self.n = n
         self.p = p
+        self.estimated_param = estimated_param
 
     @staticmethod
     def _estimate_mle_p(n: int, data: Sequence[int]) -> float:

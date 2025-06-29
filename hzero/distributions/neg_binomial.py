@@ -7,14 +7,21 @@ from base.base_discrete import BaseDiscrete
 
 
 class NegativeBinomial(BaseDiscrete):
-    def __init__(self, r: int, max_k: int, p: Optional[float] = None, data: Optional[Sequence[int]] = None):
+    def __init__(self,
+                 r: int,
+                 max_k: int,
+                 p: Optional[float] = None,
+                 data: Optional[Sequence[int]] = None,
+                 estimated_param: int = 0):
         if p is None and (data is None or r is None):
             raise ValueError("If not p, you must provide data or n")
         if p is None:
             p = self._estimate_mle_p(r, data)
+            estimated_param = 1
         self.n = r
         self.p = p
         self.max_k = max_k
+        self.estimated_param = estimated_param
 
     @staticmethod
     def _estimate_mle_p(r: int, data: Sequence[int]) -> float:

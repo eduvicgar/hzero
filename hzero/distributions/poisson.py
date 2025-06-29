@@ -7,13 +7,19 @@ from base.base_discrete import BaseDiscrete
 
 
 class Poisson(BaseDiscrete):
-    def __init__(self, max_k: int, lmbda: Optional[float] = None, data: Optional[Sequence[int]] = None) -> None:
+    def __init__(self,
+                 max_k: int,
+                 lmbda: Optional[float] = None,
+                 data: Optional[Sequence[int]] = None,
+                 estimated_param: int = 0) -> None:
         if lmbda is None and data is None:
             raise ValueError("you must specify either lambda or data")
         if lmbda is None:
             lmbda = self._estimate_mle_lmdba(data)
+            estimated_param = 1
         self.lmbda = lmbda
         self.max_k = max_k
+        self.estimated_param = estimated_param
 
     @staticmethod
     def _estimate_mle_lmdba(data: Sequence[int]) -> float:
