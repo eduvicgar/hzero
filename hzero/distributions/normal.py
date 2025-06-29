@@ -9,7 +9,7 @@ from matplotlib import pyplot as plt
 from matplotlib.patches import Patch
 from scipy.stats import norm
 from distributions.base import BaseContinuous
-from ..validators import *
+from hzero.validators import *
 
 class Normal(BaseContinuous):
     """

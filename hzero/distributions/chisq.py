@@ -8,7 +8,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 from matplotlib.patches import Patch
 from scipy.stats import chi2
-from ..validators import *
+from hzero.validators import *
 
 
 class ChiSquare:
