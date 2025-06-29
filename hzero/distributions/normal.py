@@ -3,20 +3,40 @@ This module implements a class for the normal distribution.
 With this class you can compute critic values, p-values and plot the distribution
 using the methods provided to the class.
 """
-from typing import Optional, Literal
+from typing import Optional, Literal, override
 import numpy as np
 from matplotlib import pyplot as plt
 from matplotlib.patches import Patch
 from scipy.stats import norm
+from distributions.base import BaseContinuous
 from ..validators import *
 
-class Normal:
+class Normal(BaseContinuous):
     """
     Defines a class of the normal distribution.
     """
-    def __init__(self, mean: float, std: float):
-        self.mean = mean
+    def __init__(self, mean: float, std: float, trials: Optional[int] = None):
+        super().__init__(trials)
+        self.__pob_mean = mean
         self.std = std
+
+    @override
+    def density(self, x: float) -> float:
+        return norm.pdf(x, self.__pob_mean, self.std)
+
+    @override
+    def cumulative_prob(self, x: float) -> float:
+        return self.p_value(x, "left")
+
+    @property
+    @override
+    def mean(self):
+        return self.__pob_mean
+
+    @property
+    @override
+    def var(self):
+        return self.std ** 2
 
     @validate_alpha
     def critical_value(self, alpha: float, two_tailed: bool) -> float:
@@ -125,6 +145,13 @@ class Normal:
 
         plt.grid(True)
         plt.tight_layout()
+        plt.show()
+
+    @override
+    def cumulative_plot(self):
+        x = np.linspace(0, norm.ppf(0.999, self.__pob_mean, self.std), 100)
+        y = np.array([self.cumulative_prob(i) for i in x])
+        plt.plot(x, y)
         plt.show()
 
     def __str__(self) -> str:
