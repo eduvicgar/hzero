@@ -7,6 +7,7 @@ It supports one-tailed and two-tailed tests, automatic calculation of the test s
 critical value, and p-value, and can display a plot of the distribution with relevant highlights.
 """
 import math
+from typing import Sequence
 import numpy as np
 import numpy.typing as npt
 from config import MeanHypothesisParam
@@ -20,13 +21,13 @@ class Mean:
     The test can be done assuming known population standard deviation
     or unknown standard deviation, depending on the parameters.
 
-    :param pob_data: Sample data as a NumPy array.
+    :param pob_data: Sample data.
     :param parameters: Configuration object.
     """
     def __init__(self,
-                 pob_data: npt.NDArray[float],
+                 pob_data: Sequence[float],
                  parameters: MeanHypothesisParam) -> None:
-        self.__pob_data = pob_data
+        self.__pob_data = np.array(pob_data)
         self.__hzero_mean = parameters.hzero_mean
         self.__std = parameters.std
         self.__alpha = parameters.significance

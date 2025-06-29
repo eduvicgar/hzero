@@ -7,6 +7,7 @@ It supports one-tailed and two-tailed tests, automatic calculation of the test s
 critical value, and p-value, and can display a plot of the distribution with relevant highlights.
 """
 import math
+from typing import Sequence
 import numpy as np
 import numpy.typing as npt
 from config import VarianceHypothesisParam
@@ -19,13 +20,13 @@ class Variance:
     The test can be done assuming known population mean
     or unknown mean, depending on the parameters.
 
-    :param pob_data: Sample data as a NumPy array.
+    :param pob_data: Sample data.
     :param parameters: Configuration object.
     """
     def __init__(self,
-                 pob_data: npt.NDArray[float],
+                 pob_data: Sequence[float],
                  parameters: VarianceHypothesisParam) -> None:
-        self.__pob_data = pob_data
+        self.__pob_data = np.array(pob_data)
         self.__hzero_var = parameters.hzero_var
         self.__mean = parameters.mean
         self.__alpha = parameters.significance

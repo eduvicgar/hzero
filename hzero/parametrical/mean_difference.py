@@ -7,6 +7,7 @@ It supports one-tailed and two-tailed tests, automatic calculation of the test s
 critical value, and p-value, and can display a plot of the distribution with relevant highlights.
 """
 import math
+from typing import Sequence
 import numpy as np
 import numpy.typing as npt
 from config import MeanDiffHypothesisParam
@@ -20,17 +21,17 @@ class MeanDiff:
     The test can be done assuming known population standard deviation
     or unknown standard deviation, depending on the parameters.
 
-    :param x_data: Sample data of x sample as a NumPy array.
-    :param y_data: Sample data of y sample as a NumPy array.
+    :param x_data: Sample data of x.
+    :param y_data: Sample data of y
     :param parameters: Configuration object.
     """
     def __init__(self,
-                 x_data: npt.NDArray[np.float64],
-                 y_data: npt.NDArray[np.float64],
+                 x_data: Sequence[float],
+                 y_data: Sequence[float],
                  parameters: MeanDiffHypothesisParam):
 
-        self.__x_data = x_data
-        self.__y_data = y_data
+        self.__x_data = np.array(x_data)
+        self.__y_data = np.array(y_data)
         self.__hzero_meandiff = parameters.hzero_meandiff
         self.__std1 = parameters.std1
         self.__std2 = parameters.std2
