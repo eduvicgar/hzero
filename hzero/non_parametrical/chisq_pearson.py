@@ -71,6 +71,8 @@ class ChisqPearsonDiscrete:
 
     @property
     def k(self):
+        if not self.prob_arr:
+            return self.obs_data.shape[0]
         return self.df.shape[0]
 
     @property
