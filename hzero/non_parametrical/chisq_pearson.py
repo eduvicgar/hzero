@@ -124,12 +124,12 @@ class ChisqPearsonDiscrete:
     def hypothesis(self):
         chisq = ChiSquare(self.k - self.distribution.estimated_param - 1)
         if self.significance is not None:
-            test_value = chisq.critical_value(self.significance, tail="left")
+            test_value = chisq.critical_value(self.significance, tail="right")
             if self.d > test_value:
                 return "Reject (D statistic > Chisq critical value)"
             return "No reject (D statistic < Chisq critical value)"
 
-        test_pvalue = chisq.p_value(self.d, tail="left")
+        test_pvalue = chisq.p_value(self.d, tail="right")
         if test_pvalue <= 0.01:
             return "Reject (p-value <= 0.01)"
         if 0.01 > test_pvalue > 0.2:
