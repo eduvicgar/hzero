@@ -2,7 +2,7 @@ from typing import override, Iterator, Tuple, Optional, Sequence
 import numpy as np
 from matplotlib import pyplot as plt
 from matplotlib.ticker import MaxNLocator
-from base.base_discrete import BaseDiscrete
+from .base import BaseDiscrete
 
 
 class Geometric(BaseDiscrete):

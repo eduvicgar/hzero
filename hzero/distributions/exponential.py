@@ -3,7 +3,7 @@ from typing import override, Optional, Sequence
 import numpy as np
 from matplotlib import pyplot as plt
 from scipy.stats import expon
-from base.base_continuous import BaseContinuous
+from .base import BaseContinuous
 
 
 class Exponential(BaseContinuous):

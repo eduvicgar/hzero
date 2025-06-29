@@ -1,7 +1,7 @@
 from typing import override
 import numpy as np
 from matplotlib import pyplot as plt
-from base.base_continuous import BaseContinuous
+from .base import BaseContinuous
 
 
 class Uniform(BaseContinuous):
