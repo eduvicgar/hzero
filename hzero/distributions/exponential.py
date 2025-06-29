@@ -10,7 +10,9 @@ class Exponential(BaseContinuous):
     def __init__(self,
                  lmbda: Optional[float] = None,
                  data: Optional[Sequence[int]] = None,
-                 estimated_param: int = 0):
+                 estimated_param: int = 0,
+                 trials: Optional[int] = None) -> None:
+        super().__init__(trials)
         if lmbda is None and data is None:
             raise ValueError("you must specify either lambda or data")
         if lmbda is None:

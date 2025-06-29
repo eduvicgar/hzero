@@ -1,11 +1,12 @@
-from typing import override
+from typing import override, Optional
 import numpy as np
 from matplotlib import pyplot as plt
 from .base import BaseContinuous
 
 
 class Uniform(BaseContinuous):
-    def __init__(self, low: float, high: float):
+    def __init__(self, low: float, high: float, trials: Optional[int] = None):
+        super().__init__(trials)
         if low > high:
             raise ValueError("low must be smaller than high")
         self.low = low

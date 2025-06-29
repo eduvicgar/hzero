@@ -1,7 +1,11 @@
 from abc import ABC, abstractmethod
+from typing import Optional
 
 
 class BaseContinuous(ABC):
+    def __init__(self, trials: Optional[int] = None):
+        self.trials = trials
+
     @abstractmethod
     def density(self, x: float) -> float:
         pass
