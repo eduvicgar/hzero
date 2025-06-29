@@ -11,25 +11,27 @@ class Binomial(BaseDiscrete):
                  n: int,
                  p: Optional[float] = None,
                  data: Optional[Sequence[int]] = None,
+                 trials: Optional[int] = None,
                  estimated_param: int = 0):
+        super().__init__(trials)
+        self.n = n
         if p is None and (data is None or n is None):
             raise ValueError("If not p, you must provide data or n")
         if p is None:
-            p = self._estimate_mle_p(n, data)
+            p = self._estimate_mle_p(trials, data)
             estimated_param = 1
-        self.n = n
         self.p = p
         self.estimated_param = estimated_param
 
-    @staticmethod
-    def _estimate_mle_p(n: int, data: Sequence[int]) -> float:
+    def _estimate_mle_p(self, trials: int, data: Sequence[int]) -> float:
         """
         MLE estimation of p parameter
         """
         data = np.array(data)
-        total_successes = np.sum(data)
-        total_trials = len(data) * n
-        return total_successes / total_trials
+        num = np.sum(data[i]*i for i in range(0, len(data)-1))
+        denom = trials * self.n
+        return num / denom
+
 
     @override
     def probability(self, k: int) -> float:

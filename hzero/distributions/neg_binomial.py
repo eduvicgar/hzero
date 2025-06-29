@@ -12,7 +12,9 @@ class NegativeBinomial(BaseDiscrete):
                  max_k: int,
                  p: Optional[float] = None,
                  data: Optional[Sequence[int]] = None,
-                 estimated_param: int = 0):
+                 estimated_param: int = 0,
+                 trials: Optional[int] = None):
+        super().__init__(trials)
         if p is None and (data is None or r is None):
             raise ValueError("If not p, you must provide data or n")
         if p is None:

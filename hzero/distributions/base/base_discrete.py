@@ -1,7 +1,11 @@
+from typing import Optional
 from abc import ABC, abstractmethod
 
 
 class BaseDiscrete(ABC):
+    def __init__(self, trials: Optional[int]):
+        self.trials = trials
+
     @abstractmethod
     def probability(self, k: int):
         pass

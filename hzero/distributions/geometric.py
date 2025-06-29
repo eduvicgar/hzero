@@ -10,7 +10,9 @@ class Geometric(BaseDiscrete):
                  max_k: int,
                  p: Optional[float] = None,
                  data: Optional[Sequence[int]] = None,
-                 estimated_param: int = 0) -> None:
+                 estimated_param: int = 0,
+                 trials: Optional[int] = None) -> None:
+        super().__init__(trials)
         if p is None and data is None:
             raise ValueError("you must specify either p or data")
         if p is None:
