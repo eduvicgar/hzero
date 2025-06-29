@@ -3,8 +3,9 @@ from abc import ABC, abstractmethod
 
 
 class BaseDiscrete(ABC):
-    def __init__(self, trials: Optional[int]):
+    def __init__(self, trials: Optional[int], estimated_param: int = 0):
         self.trials = trials
+        self.estimated_param = estimated_param
 
     @abstractmethod
     def probability(self, k: int):
