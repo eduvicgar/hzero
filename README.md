@@ -6,7 +6,9 @@
 
 ## 🚧 Project Status
 
-This project is currently under active development.
+This proyect is currently under active development. Expect breaking changes and incomplete features.
+
+🛠️ Currently working on the non-parametric tests. See [`feature/non-parametric`](https://github.com/eduvicgar/hzero/tree/feature/non-parametrical)
 
 ## ✨ Main Features
 

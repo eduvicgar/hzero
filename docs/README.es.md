@@ -7,7 +7,10 @@ estadísticos bajo diversas condiciones.
 
 ## 🚧 Estado del proyecto
 
-Este proyecto está actualmente en desarrollo activo.
+Este proyecto está actualmente en desarrollo activo. Puede estar sujeta a cambios frecuentes.
+
+🛠️ En este momento estoy trabajando en la implementación de los tests no paramétricos. Ver [`feature/non-parametric`](https://github.com/eduvicgar/hzero/tree/feature/non-parametrical)
+
 
 ## ✨ Características principales
 
